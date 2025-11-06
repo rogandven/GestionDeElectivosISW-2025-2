@@ -51,6 +51,11 @@ export const SubjectEntity = new EntitySchema({
             target: 'inscription',
             inverseSide: 'inscription'
         },
+        subject_template: {
+            type: 'many-to-one',
+            target: 'subject_template',
+            inverseSide: 'subject_template'
+        }
     },
 });
 
