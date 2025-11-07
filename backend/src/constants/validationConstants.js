@@ -3,3 +3,4 @@ export const MAX_ACRONYM_LENGTH = 20;
 export const MIN_NAME_LENGTH = 3;
 export const MAX_NAME_LENGTH = 40;
 
+export const VALID_STATUS_ARRAY = ['EN_ESPERA', 'APROBADA', 'RECHAZADA'];

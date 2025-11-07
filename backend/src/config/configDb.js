@@ -7,6 +7,7 @@ import InscriptionEntity from "../entity/inscription.entity.js";
 import PreinscriptionEntity from "../entity/preinscription.entity.js";
 import ScheduleEntity from "../entity/schedule.entity.js";
 import SubjectEntity from "../entity/subject.entity.js";
+import SubjectTemplateEntity from "../entity/subject_template.entity.js";
 
 // Configuración de la conexión a la base de datos
 export const AppDataSource = new DataSource({
@@ -16,7 +17,7 @@ export const AppDataSource = new DataSource({
     username: `${DB_USERNAME}`,
     password: `${PASSWORD}`,
     database: `${DATABASE}`,
-    entities: [UserEntity, CareerEntity, InscriptionEntity, PreinscriptionEntity, ScheduleEntity, SubjectEntity],
+    entities: [UserEntity, CareerEntity, InscriptionEntity, PreinscriptionEntity, ScheduleEntity, SubjectEntity, SubjectTemplateEntity],
     synchronize: true,
     logging: false,
 });
