@@ -1,20 +1,7 @@
 "use strict";
 import Joi from "joi";
-import { VALID_STATUS_ARRAY } from "../constants/validationConstants.js";
-import { validateTimeStamp } from "./timestamp.validation.js";
-
-const validateStatus = (status, helper) => {
-    if (!status) {
-      return helper.message("Estado no proporcionado");
-    }
-
-    for (let i = 0; i < VALID_STATUS_ARRAY.length; i++) {
-      if (status === VALID_STATUS_ARRAY[i]) {
-        return true;
-      }
-    }
-    return helper.message("Estado malformado"); 
-}
+import { validateTimeStamp } from "./modules/timestamp.validation.js";
+import { validateStatus } from "./modules/status.validation.js";
 
 // Esquema de validación para el registro de usuarios
 export const inscriptionIntegrityValidation = Joi.object({
