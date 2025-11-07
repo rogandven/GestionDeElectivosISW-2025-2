@@ -1,14 +1,7 @@
 "use strict";
 import Joi from "joi";
 import { VALID_STATUS_ARRAY } from "../constants/validationConstants.js";
-
-export const validateTimeStamp = (value, helper) => {
-    const result = Date.parse(value, "yyyy/MM/dd HH:mm:ss");
-    if (result === null || !result) {
-        return helper.message("La fecha no es válida");
-    }
-    return true;
-}
+import { validateTimeStamp } from "./timestamp.validation.js";
 
 const validateStatus = (status, helper) => {
     if (!status) {
