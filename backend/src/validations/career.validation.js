@@ -1,7 +1,7 @@
 "use strict";
 import Joi from "joi";
-import { MIN_ACRONYM_LENGTH, MAX_ACRONYM_LENGTH } from "../constants/validationConstants.js";
-import { MIN_NAME_LENGTH, MAX_NAME_LENGTH } from "../constants/validationConstants.js";
+import { MIN_ACRONYM_LENGTH, MAX_ACRONYM_LENGTH } from "./constants/validationConstants.js";
+import { MIN_NAME_LENGTH, MAX_NAME_LENGTH } from "./constants/validationConstants.js";
 
 // Esquema de validación para el registro de usuarios
 export const careerIntegrityValidation = Joi.object({
