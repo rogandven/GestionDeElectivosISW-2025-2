@@ -5,10 +5,12 @@ import jwt from "jsonwebtoken";
 import { encryptPassword, comparePassword } from "../helpers/bcrypt.helper.js";
 import { AppDataSource } from "../config/configDb.js";
 import { SESSION_SECRET } from "../config/configEnv.js";
-import {
+/* import {
   registerValidation,
   loginValidation,
-} from "../validations/auth.validation.js";
+} from "../validations/auth.validation.js"; */
+import { userCreateValidation, userLoginValidation, userUpdateValidation, userIntegrityValidation } from "../validations/user.validation.js";
+
 
 // Controlador de autenticación
 
@@ -17,6 +19,7 @@ export async function register(req, res) {
     // Obtener el repositorio de usuarios y validar los datos de entrada
     const userRepository = AppDataSource.getRepository(User);
     const { username, rut, email, password } = req.body;
+    
     const { error } = registerValidation.validate(req.body);
     if (error) return res.status(400).json({ message: error.message });
 
