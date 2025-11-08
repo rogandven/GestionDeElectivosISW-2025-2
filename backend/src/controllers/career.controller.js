@@ -30,7 +30,6 @@ export async function createCareer(req, res) {
         if (result.error) {
             return res.status(400).json({ message: result.error.message });
         }
-
         if (careerRepository.findOneBy({ acronym: data.acronym })) {
             return res.status(400).json({ message: "Carrera ya existe" });
         }
@@ -38,7 +37,7 @@ export async function createCareer(req, res) {
         const queryRunner = AppDataSource.createQueryRunner();
         await queryRunner.startTransaction();
         try {
-            data.career_subject_subject = data.subjects;
+            data.subject = data.subjects;
             data.subjects = undefined;
             careerRepository.save(data);
         } catch (error) {
@@ -47,7 +46,6 @@ export async function createCareer(req, res) {
             await queryRunner.release();
             return res.status(500).json({ message: "Error al crear carrera.", error: error });
         } 
-
         await queryRunner.release();
         return res.status(200).json({ message: "¡Carrera creada con éxito!", error: data });
     } catch (error) {
