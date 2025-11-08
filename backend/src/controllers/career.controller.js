@@ -1,15 +1,16 @@
 import { AppDataSource } from "../config/configDb.js";
 import Career from "../entity/career.entity.js";
+import { careerIntegrityValidation, careerCreationValidation } from "../validations/career.validation.js";
 
 const RELATIONS = ["subject", "user"];
 
 export async function getCareers(req, res) {
     try {
         const careerRepository = AppDataSource.getRepository(Career);
-        const careers = await asambleaRepository.find({
+        const careers = await careerRepository.find({
             relations: RELATIONS,
         });
-
+        res.status(200).json({ data: careers });
     } catch (error) {
         console.error("Error al obtener las carreras", error);
         res.status(500).json({ message: "Error al obtener las carreras" });
@@ -18,25 +19,36 @@ export async function getCareers(req, res) {
 
 export async function createCareer(req, res) {
     try {
+        const data = req.body;
         const careerRepository = AppDataSource.getRepository(Career);
-        
-        const queryRunner = AppDataSource.createQueryRunner();
 
-        await queryRunner.startTransaction();
-
-        try {
-            
-        } catch (error) {
-            await queryRunner.rollbackTransaction();
-        } finally {
-            await queryRunner.release();
+        let result = careerIntegrityValidation.validate(data);
+        if (result.error) {
+            return res.status(400).json({ message: result.error.message });
+        }
+        result = careerCreationValidation.validate(data);
+        if (result.error) {
+            return res.status(400).json({ message: result.error.message });
         }
 
-        return res.status(200).json({ message: "Carreras encontradas", data: careers }); 
+        const queryRunner = AppDataSource.createQueryRunner();
+        await queryRunner.startTransaction();
+        try {
+            data.career_subject_subject = data.subjects;
+            data.subjects = undefined;
+            careerRepository.save(data);
+        } catch (error) {
+            console.error(error);
+            await queryRunner.rollbackTransaction();
+            await queryRunner.release();
+            return res.status(500).json({ message: "Error al crear carrera.", error: error });
+        } 
 
+        await queryRunner.release();
+        return res.status(200).json({ message: "¡Carrera creada con éxito!", error: data });
     } catch (error) {
         console.error("Error al crear career", error);
-        res.status(500).json({ message: "Error al crear career." });
+        res.status(500).json({ message: "Error al crear carrera.", error: error });
     }
 }
 

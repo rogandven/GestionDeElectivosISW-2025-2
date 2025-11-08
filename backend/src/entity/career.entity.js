@@ -23,7 +23,7 @@ export const CareerEntity = new EntitySchema({
             inverseSide: 'career-subject',
             joinTable: true
         },   
-        career: {
+        user: {
             type: 'one-to-many',
             target: 'user',
             inverseSide: 'career-user',
