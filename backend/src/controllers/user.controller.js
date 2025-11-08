@@ -2,11 +2,15 @@
 import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
+const RELATIONS = ["inscription", "preinscription", "career", "subject"];
+
 export async function getUsers(req, res) {
   try {
     // Obtener el repositorio de usuarios y buscar todos los usuarios
     const userRepository = AppDataSource.getRepository(User);
-    const users = await userRepository.find();
+    const users = await userRepository.find({
+      relations: RELATIONS
+    });
 
     res.status(200).json({ message: "Usuarios encontrados: ", data: users });
   } catch (error) {
@@ -20,7 +24,7 @@ export async function getUserById(req, res) {
     // Obtener el repositorio de usuarios y buscar un usuario por ID
     const userRepository = AppDataSource.getRepository(User);
     const { id } = req.params;
-    const user = await userRepository.findOne({ where: { id } });
+    const user = await userRepository.findOne({ where: { id }, relations: RELATIONS });
 
     // Si no se encuentra el usuario, devolver un error 404
     if (!user) {
@@ -44,7 +48,7 @@ export async function updateUserById(req, res) {
 
     const userRepository = AppDataSource.getRepository(User);
     const { id } = req.params;
-    const { username, email, rut, full_name, role, careerAcronym } = req.body;
+    const { username, email, rut, full_name, careerAcronym } = req.body;
     const user = await userRepository.findOne({ where: { id } });
 
     // Si no se encuentra el usuario, devolver un error 404
@@ -56,6 +60,9 @@ export async function updateUserById(req, res) {
     user.username = username || user.username;
     user.email = email || user.email;
     user.rut = rut || user.rut;
+    user.full_name = full_name || user.full_name;
+    user.careerAcronym = careerAcronym || user.careerAcronym;
+
 
     // Guardar los cambios en la base de datos
     await userRepository.save(user);
@@ -74,7 +81,7 @@ export async function deleteUserById(req, res) {
     // Obtener el repositorio de usuarios y buscar el usuario por ID
     const userRepository = AppDataSource.getRepository(User);
     const { id } = req.params;
-    const user = await userRepository.findOne({ where: { id } });
+    const user = await userRepository.findOne({ where: { id }, relations: RELATIONS });
 
     // Si no se encuentra el usuario, devolver un error 404
     if (!user) {
