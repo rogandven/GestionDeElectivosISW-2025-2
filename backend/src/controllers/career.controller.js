@@ -31,6 +31,10 @@ export async function createCareer(req, res) {
             return res.status(400).json({ message: result.error.message });
         }
 
+        if (careerRepository.findOneBy({ acronym: data.acronym })) {
+            return res.status(400).json({ message: "Carrera ya existe" });
+        }
+
         const queryRunner = AppDataSource.createQueryRunner();
         await queryRunner.startTransaction();
         try {
