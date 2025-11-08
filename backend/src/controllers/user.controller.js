@@ -106,10 +106,13 @@ export async function getProfile(req, res) {
     // Formatear la respuesta excluyendo la contraseña
     const formattedUser = {
       id: user.id,
+      full_name: user.full_name,
       username: user.username,
       email: user.email,
       rut: user.rut,
-      role: user.role
+      role: user.role,
+      generation: user.generation,
+      careerAcronym: user.careerAcronym,
     };
 
     res.status(200).json({ message: "Perfil encontrado: ", data: formattedUser });
