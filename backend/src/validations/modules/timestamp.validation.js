@@ -5,3 +5,5 @@ export const validateTimeStamp = (value, helper) => {
     }
     return true;
 }
+
+export default validateTimeStamp;

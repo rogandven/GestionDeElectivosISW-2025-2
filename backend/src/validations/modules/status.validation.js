@@ -12,3 +12,5 @@ export const validateStatus = (status, helper) => {
     }
     return helper.message("Estado malformado"); 
 }
+
+export default validateStatus;

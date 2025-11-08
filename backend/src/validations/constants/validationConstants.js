@@ -18,6 +18,11 @@ export const APPROVED = 'APROBADA';
 export const REJECTED = 'RECHAZADA';
 export const VALID_STATUS_ARRAY = [AWAITING, APPROVED, REJECTED];
 
+export const ADMIN_ROLE_1 = 'PROFESOR';
+export const ADMIN_ROLE_2 = 'ADMINISTRADOR';
+export const USER_ROLE = 'ESTUDIANTE';
+export const VALID_ROLES = [ADMIN_ROLE_1, ADMIN_ROLE_2, USER_ROLE];
+
 export const USERNAME_REGEXP = /^[a-zA-Z0-9_]+$/;
 export const MIN_USERNAME = 3;
 export const MAX_USERNAME = 30;
@@ -29,4 +34,12 @@ export const MAX_EMAIL = 50;
 
 export const MIN_PASSWORD = 8;
 export const MAX_PASSWORD = 26;
+
+export const ALLOWED_EMAIL_1 = '@alumnos.ubiobio.cl';
+export const ALLOWED_EMAIL_2 = '@ubiobio.cl';
+
+export const NAME_REGEXP = /^[a-zA-Z\s,.'\-\pL]+$/;
+export const MIN_FULL_NAME = MIN_USERNAME;
+export const MAX_FULL_NAME = MAX_USERNAME;
+
 

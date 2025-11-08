@@ -1,16 +1,10 @@
 "use strict";
 import Joi from "joi";
 import { MIN_USERNAME, MAX_USERNAME, USERNAME_REGEXP, MIN_EMAIL, MAX_EMAIL, MIN_PASSWORD, MAX_PASSWORD } from "./constants/validationConstants.js";
+import domainEmailValidator from "./modules/email.validation.js";
 
 // Función para validar que el correo electrónico termine en @gmail.com o @gmail.cl
-const domainEmailValidator = (value, helpers) => {
-  if (!value.endsWith("@gmail.com") && !value.endsWith("@gmail.cl")) {
-    return helpers.message(
-      "El correo electrónico debe finalizar en @gmail.com o @gmail.cl."
-    );
-  }
-  return value;
-};
+
 
 // Esquema de validación para el registro de usuarios
 export const registerValidation = Joi.object({
