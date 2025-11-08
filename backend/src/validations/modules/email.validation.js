@@ -1,4 +1,4 @@
-import { ALLOWED_EMAIL_1, ALLOWED_EMAIL_2 } from "../constants/validationConstants.js";
+import { ALLOWED_EMAIL_1, ALLOWED_EMAIL_2 } from "../../constants/validationConstants.js";
 
 export const domainEmailValidator = (value, helpers) => {
   if (!value.endsWith(ALLOWED_EMAIL_1) && !value.endsWith(ALLOWED_EMAIL_2)) {

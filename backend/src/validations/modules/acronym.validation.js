@@ -1,6 +1,6 @@
 "use strict";
 import Joi from "joi";
-import { MIN_ACRONYM_LENGTH, MAX_ACRONYM_LENGTH } from "../constants/validationConstants.js";
+import { MIN_ACRONYM_LENGTH, MAX_ACRONYM_LENGTH } from "../../constants/validationConstants.js";
 
 export const acronymValidation = Joi.string()
     .min(MIN_ACRONYM_LENGTH)

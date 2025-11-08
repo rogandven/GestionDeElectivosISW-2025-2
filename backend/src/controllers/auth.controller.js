@@ -18,7 +18,7 @@ export async function register(req, res) {
   try {
     // Obtener el repositorio de usuarios y validar los datos de entrada
     const userRepository = AppDataSource.getRepository(User);
-    const { username, rut, email, password, full_name, careerAcronym } = req.body;
+    const { username, rut, email, password, full_name, careerAcronym, role, generation } = req.body;
     
     // const { error } = registerValidation.validate(req.body);
     let result = userIntegrityValidation.validate(req.body);
@@ -53,6 +53,8 @@ export async function register(req, res) {
       rut,
       full_name, 
       careerAcronym,
+      role,
+      generation,
       password: await encryptPassword(password),
     });
     await userRepository.save(newUser);
