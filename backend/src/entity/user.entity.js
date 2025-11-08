@@ -1,6 +1,6 @@
 "use strict";
 
-import { EntitySchema, JoinColumn } from "typeorm";
+import { EntitySchema } from "typeorm";
 
 export const UserEntity = new EntitySchema({
     name: "user",
