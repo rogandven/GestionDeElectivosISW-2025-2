@@ -1,6 +1,6 @@
 import { AppDataSource } from "../config/configDb.js";
 import Career from "../entity/career.entity.js";
-import { careerIntegrityValidation, careerCreationValidation, careerFindingValidation } from "../validations/career.validation.js";
+import { careerIntegrityValidation, careerCreationValidation, careerFindingValidation, careerEditingValidation } from "../validations/career.validation.js";
 
 const RELATIONS = ["subject", "user"];
 
@@ -68,7 +68,7 @@ export async function getCareerById(req, res) {
         if (result.error) {
             return res.status(400).json({ message: result.error.message });
         }
-        if (!(career = careerRepository.findOneBy(idObject))) {
+        if (!(career = await careerRepository.findOneBy(idObject))) {
             return res.status(404).json({ message: "Carrera no encontrada." });
         }
         return res.status(200).json({message: "Carrera encontrada con éxito!", career: career});
@@ -80,21 +80,50 @@ export async function getCareerById(req, res) {
 
 export async function updateCareer(req, res) {
     try {
+        const data = req.body;
         const careerRepository = AppDataSource.getRepository(Career);
-        const { } = req.body;
-        const { id } = req.params;
+        originalAcronym = req.params.acronym;
 
+        let result = careerIntegrityValidation.validate(data);
+        if (result.error) {
+            return res.status(400).json({ message: result.error.message });
+        }        
+        result = careerEditingValidation.validate(data);
+        if (result.error) {
+            return res.status(400).json({ message: result.error.message });
+        }
+
+        if (!careerRepository.findOneBy({ acronym: originalAcronym })) {
+            return res.status(400).json({ message: "Carrera no existe" });
+        }
+        const queryRunner = AppDataSource.createQueryRunner();
+        await queryRunner.startTransaction();
+        try {
+            data.subject = data.subjects;
+            data.subjects = undefined;
+            await careerRepository.save(data);
+        } catch (error) {
+            console.error(error);
+            await queryRunner.rollbackTransaction();
+            await queryRunner.release();
+            return res.status(500).json({ message: "Error al editar carrera.", error: error });
+        } 
+        await queryRunner.release();
+        return res.status(200).json({ message: "¡Carrera editada con éxito!", data: data });
     } catch (error) {
-        console.error("Error al actualizar career", error);
-        res.status(500).json({ message: "Error al actualizar career." });
+        console.error("Error al editar carrera", error);
+        res.status(500).json({ message: "Error al editar carrera.", error: error });
     }
 }
 
 export async function deleteCareer(req, res) {
     try {
         const careerRepository = AppDataSource.getRepository(Career);
-        const { id } = req.params;
+        const idObject = {acronym: req.params.acronym};
 
+        if (await careerRepository.delete(idObject)) {
+
+        }
     } catch (error) {
         console.error("Error al eliminar career", error);
         res.status(500).json({ message: "Error al eliminar career." });
