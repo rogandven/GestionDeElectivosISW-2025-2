@@ -1,5 +1,6 @@
 "use strict";
 import Joi from "joi";
+import { MIN_USERNAME, MAX_USERNAME, USERNAME_REGEXP, MIN_EMAIL, MAX_EMAIL, MIN_PASSWORD, MAX_PASSWORD } from "./constants/validationConstants.js";
 
 // Función para validar que el correo electrónico termine en @gmail.com o @gmail.cl
 const domainEmailValidator = (value, helpers) => {
@@ -14,10 +15,10 @@ const domainEmailValidator = (value, helpers) => {
 // Esquema de validación para el registro de usuarios
 export const registerValidation = Joi.object({
   username: Joi.string()
-    .min(3)
-    .max(30)
+    .min(MIN_USERNAME)
+    .max(MAX_USERNAME)
     .required()
-    .pattern(/^[a-zA-Z0-9_]+$/)
+    .pattern(USERNAME_REGEXP)
     .messages({
       "string.pattern.base":
         "El nombre de usuario solo puede contener letras, números y guiones bajos.",
@@ -27,7 +28,7 @@ export const registerValidation = Joi.object({
     }),
   rut: Joi.string()
     .required()
-    .pattern(/^\d{2}\.\d{3}\.\d{3}-[\dkK]$/)
+    .pattern(RUT_REGEXP)
     .messages({
       "string.empty": "El rut no puede estar vacío.",
       "string.base": "El rut debe ser de tipo string.",
@@ -36,8 +37,8 @@ export const registerValidation = Joi.object({
   email: Joi.string()
     .email()
     .required()
-    .min(15)
-    .max(50)
+    .min(MIN_EMAIL)
+    .max(MAX_EMAIL)
     .messages({
       "string.email": "El correo electrónico debe ser válido.",
       "string.min": "El correo electrónico debe tener al menos 15 caracteres.",
@@ -49,8 +50,8 @@ export const registerValidation = Joi.object({
       "Validación de dominio de correo electrónico"
     ),
   password: Joi.string()
-    .min(8)
-    .max(26)
+    .min(MIN_PASSWORD)
+    .max(MAX_PASSWORD)
     .required()
     .messages({
       "string.empty": "La contraseña no puede estar vacía.",
