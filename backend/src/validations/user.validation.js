@@ -1,6 +1,6 @@
 "use strict";
 import Joi from "joi";
-import { MIN_USERNAME, MAX_USERNAME, USERNAME_REGEXP, MIN_EMAIL, MAX_EMAIL, MIN_PASSWORD, MAX_PASSWORD, MIN_FULL_NAME, MAX_FULL_NAME } from "./constants/validationConstants.js";
+import { MIN_USERNAME, MAX_USERNAME, USERNAME_REGEXP, NAME_REGEXP, RUT_REGEXP, MIN_EMAIL, MAX_EMAIL, MIN_PASSWORD, MAX_PASSWORD, MIN_FULL_NAME, MAX_FULL_NAME } from "./constants/validationConstants.js";
 import { validateRole } from "./modules/role.validation.js";
 import { domainEmailValidator } from "./modules/email.validation.js";
 import { validateTimeStamp } from "./modules/timestamp.validation.js";
@@ -52,7 +52,7 @@ export const userIntegrityValidation = Joi.object({
     }),
     role: Joi.string().custom(validateRole),
     generation: Joi.string().custom(validateTimeStamp),
-    careerAcronym: acronymValidation(),
+    careerAcronym: acronymValidation,
 });
 
 export const userCreateValidation = () => Joi.object({

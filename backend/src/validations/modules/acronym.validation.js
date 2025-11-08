@@ -12,7 +12,7 @@ export const acronymValidation = Joi.string()
       "string.min": `El acrónimo debe tener al menos ${String(MIN_ACRONYM_LENGTH)} caracteres.`,
       "string.max": `El acrónimo no puede exceder los ${String(MAX_ACRONYM_LENGTH)} caracteres.`,
       "string.empty": "El acrónimo es obligatorio.",
-    }).alphanum
+    })
 ;
 
 export default acronymValidation;
