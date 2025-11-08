@@ -55,27 +55,27 @@ export const userIntegrityValidation = Joi.object({
     careerAcronym: acronymValidation,
 });
 
-export const userCreateValidation = () => Joi.object({
-    username: Joi().any().required(),
-    full_name: Joi().any().required(),
-    rut: Joi().any().required(),
-    email: Joi().any().required(),
-    password: Joi().any().required(),
-    role: Joi().any().required(),
-    generation: Joi().any().required(),
+export const userCreateValidation = Joi.object({
+    username: Joi.any().required(),
+    full_name: Joi.any().required(),
+    rut: Joi.any().required(),
+    email: Joi.any().required(),
+    password: Joi.any().required(),
+    role: Joi.any().required(),
+    generation: Joi.any().required(),
 }).unknown(false);
 
-export const userUpdateValidation = () => Joi.object({
-    username: Joi().any(),
-    full_name: Joi().any(),
-    rut: Joi().any(),
-    email: Joi().any(),
-    password: Joi().any(),
-    role: Joi().any(),
-    generation: Joi().any(),
+export const userUpdateValidation = Joi.object({
+    username: Joi.any(),
+    full_name: Joi.any(),
+    rut: Joi.any(),
+    email: Joi.any(),
+    password: Joi.any(),
+    role: Joi.any(),
+    generation: Joi.any(),
 }).unknown(false);
 
-export const userLoginValidation = () => Joi.object({
-    email: Joi().any(),
-    password: Joi().any(),
+export const userLoginValidation = Joi.object({
+    email: Joi.any(),
+    password: Joi.any(),
 }).unknown(false);

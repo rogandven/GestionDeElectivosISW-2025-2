@@ -1,7 +1,9 @@
+import { ALLOWED_EMAIL_1, ALLOWED_EMAIL_2 } from "../constants/validationConstants.js";
+
 export const domainEmailValidator = (value, helpers) => {
-  if (!value.endsWith("@gmail.com") && !value.endsWith("@gmail.cl")) {
+  if (!value.endsWith(ALLOWED_EMAIL_1) && !value.endsWith(ALLOWED_EMAIL_2)) {
     return helpers.message(
-      "El correo electrónico debe finalizar en @gmail.com o @gmail.cl."
+      `El correo electrónico debe finalizar en ${ALLOWED_EMAIL_1} o ${ALLOWED_EMAIL_2}`
     );
   }
   return value;

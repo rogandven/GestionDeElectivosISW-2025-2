@@ -41,10 +41,10 @@ export async function getUserById(req, res) {
 export async function updateUserById(req, res) {
   try {
     // Obtener el repositorio de usuarios y buscar un usuario por ID
-    const { error1 } = userIntegrityValidation.validate(req.body);
-    if (error1) return res.status(400).json({ message: error1.message });
-    const { error2 } = userCreateValidation.validate(req.body);
-    if (error2) return res.status(400).json({ message: error2.message });    
+    let result = userIntegrityValidation.validate(req.body);
+    if (result.error) return res.status(400).json({ message: result.error.message });
+    result = userCreateValidation.validate(req.body);
+    if (result.error) return res.status(400).json({ message: result.error.message });    
 
     const userRepository = AppDataSource.getRepository(User);
     const { id } = req.params;

@@ -10,7 +10,7 @@ export const validateRole = (role, helper) => {
         return true;
       }
     }
-    return helper.message("Estado malformado"); 
+    return helper.message("Rol malformado"); 
 }
 
 export default validateRole;

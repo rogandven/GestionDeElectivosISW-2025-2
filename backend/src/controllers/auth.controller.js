@@ -21,10 +21,10 @@ export async function register(req, res) {
     const { username, rut, email, password, full_name, careerAcronym } = req.body;
     
     // const { error } = registerValidation.validate(req.body);
-    const { error1 } = userIntegrityValidation.validate(req.body);
-    if (error1) return res.status(400).json({ message: error1.message });
-    const { error2 } = userCreateValidation.validate(req.body);
-    if (error2) return res.status(400).json({ message: error2.message });    
+    let result = userIntegrityValidation.validate(req.body);
+    if (result.error) return res.status(400).json({ message: result.error.message });
+    result = userCreateValidation.validate(req.body);
+    if (result.error) return res.status(400).json({ message: result.error.message });    
 
     // Verificar si el usuario ya existe verificando email, rut y username
     const existingEmailUser = await userRepository.findOne({
@@ -34,6 +34,7 @@ export async function register(req, res) {
       return res.status(409).json({ message: "Correo ya registrado." });
 
     const existingRutUser = await userRepository.findOne({ where: { rut } });
+    console.log(JSON.stringify(existingRutUser));
     if (existingRutUser)
       return res.status(409).json({ message: "Rut ya registrado." });
 
@@ -74,10 +75,10 @@ export async function login(req, res) {
     const userRepository = AppDataSource.getRepository(User);
     const { email, password } = req.body;
 
-    const { error1 } = userIntegrityValidation.validate(req.body);
-    if (error1) return res.status(400).json({ message: error1.message });
-    const { error2 } = userLoginValidation.validate(req.body);
-    if (error2) return res.status(400).json({ message: error2.message });    
+    let result = userIntegrityValidation.validate(req.body);
+    if (result.error) return res.status(400).json({ message: result.error.message });
+    result = userLoginValidation.validate(req.body);
+    if (result.error) return res.status(400).json({ message: result.error.message });    
 
     // Verificar si el usuario existe y si la contraseña es correcta
     const userFound = await userRepository.findOne({ where: { email } });
