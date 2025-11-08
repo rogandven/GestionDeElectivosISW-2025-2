@@ -3,6 +3,7 @@
 import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
+import { ADMIN_ROLE_1, ADMIN_ROLE_2, USER_ROLE } from "../constants/validationConstants.js";
 
 // Función para crear usuarios por defecto
 // Se aplica sólo al iniciar la base de datos
@@ -27,7 +28,7 @@ export async function createUsers() {
                 rut: "98765432-1",
                 email: "usuario@gmail.com",
                 password: await encryptPassword("usuario123"),
-                role: "usuario"
+                role: "USER_ROLE"
             }
         ]
 

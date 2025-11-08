@@ -34,7 +34,7 @@ export async function register(req, res) {
       return res.status(409).json({ message: "Correo ya registrado." });
 
     const existingRutUser = await userRepository.findOne({ where: { rut } });
-    console.log(JSON.stringify(existingRutUser));
+    // console.log(JSON.stringify(existingRutUser));
     if (existingRutUser)
       return res.status(409).json({ message: "Rut ya registrado." });
 
