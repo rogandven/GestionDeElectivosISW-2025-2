@@ -1,28 +1,28 @@
 import { AppDataSource } from "../config/configDb.js";
-import Asamblea from "../entity/asamblea.entity.js";
-import { createValidation, NULL_INDICATOR, updateValidation } from "../validations/asamblea.validation.js"
+import Career from "../entity/career.entity.js";
+import { createValidation, NULL_INDICATOR, updateValidation } from "../validations/career.validation.js"
 import { getUserId, getToken } from "../middleware/authentication.middleware.js";
 import { isNull, assertValidId, ASSERTVALIDID_SUCCESS } from "../validations/other.validation.js";
 import sendMail from "../email/emailHandler.js";
 import { sendMailToAllUsers } from "./user.controller.js";
 
-export async function getAsambleas(req, res) {
+export async function getCareers(req, res) {
     try {
-        const asambleaRepository = AppDataSource.getRepository(Asamblea);
-        const asambleas = await asambleaRepository.find({
+        const careerRepository = AppDataSource.getRepository(Career);
+        const careers = await careerRepository.find({
             relations: ["creator"],
         });
 
-        res.status(200).json({ message: "Asambleas encontradas", data: asambleas });
+        res.status(200).json({ message: "Careers encontradas", data: careers });
     } catch (error) {
-        console.error("Error al obtener las asambleas", error);
-        res.status(500).json({ message: "Error al obtener las asambleas" });
+        console.error("Error al obtener las careers", error);
+        res.status(500).json({ message: "Error al obtener las careers" });
     }
 }
 
-export async function createAsamblea(req, res) {
+export async function createCareer(req, res) {
     try {
-        const asambleaRepository = AppDataSource.getRepository(Asamblea);
+        const careerRepository = AppDataSource.getRepository(Career);
         const { description, date, url, place } = req.body;
 
         const creatorId = getUserId(getToken(req))
@@ -43,29 +43,29 @@ export async function createAsamblea(req, res) {
             })
         }
 
-        const newAsamblea = asambleaRepository.create({
+        const newCareer = careerRepository.create({
             creatorId,
             description,
             date,
             url,
             place,
         });
-        const savedAsamblea = await asambleaRepository.save(newAsamblea);
+        const savedCareer = await careerRepository.save(newCareer);
         
-        sendMailToAllUsers("Nueva asamblea", ("Descripción: " + description + "\n" + "Fecha: " + date + "\n" + "URL: " + url + "\n" + "Lugar: " + place + "\n"));
+        sendMailToAllUsers("Nueva career", ("Descripción: " + description + "\n" + "Fecha: " + date + "\n" + "URL: " + url + "\n" + "Lugar: " + place + "\n"));
 
         res
             .status(201)
-            .json({ message: "Asamblea creada correctamente", data: savedAsamblea });
+            .json({ message: "Career creada correctamente", data: savedCareer });
     } catch (error) {
-        console.error("Error al crear asamblea", error);
-        res.status(500).json({ message: "Error al crear asamblea." });
+        console.error("Error al crear career", error);
+        res.status(500).json({ message: "Error al crear career." });
     }
 }
 
-export async function getAsambleaById(req, res) {
+export async function getCareerById(req, res) {
     try {
-        const asambleaRepository = AppDataSource.getRepository(Asamblea);
+        const careerRepository = AppDataSource.getRepository(Career);
         const { id } = req.params;
 
         const assertValidIdResult = assertValidId(id, req, res);
@@ -73,19 +73,19 @@ export async function getAsambleaById(req, res) {
             return assertValidIdResult
         }
 
-        const asamblea = await asambleaRepository.findOne({ where: { id }, relations: ["creator"] });
-        if (!asamblea) return res.status(404).json({ message: "Asamblea no encontrada." });
+        const career = await careerRepository.findOne({ where: { id }, relations: ["creator"] });
+        if (!career) return res.status(404).json({ message: "Career no encontrada." });
 
-        res.status(200).json({ message: "Asamblea encontrada: ", data: asamblea });
+        res.status(200).json({ message: "Career encontrada: ", data: career });
     } catch (error) {
-        console.error("Error al encontrar asamblea", error);
-        res.status(500).json({ message: "Error al encontrar asamblea." });
+        console.error("Error al encontrar career", error);
+        res.status(500).json({ message: "Error al encontrar career." });
     }
 }
 
-export async function updateAsamblea(req, res) {
+export async function updateCareer(req, res) {
     try {
-        const asambleaRepository = AppDataSource.getRepository(Asamblea);
+        const careerRepository = AppDataSource.getRepository(Career);
         const { description, date, url, place } = req.body;
         const { id } = req.params;
 
@@ -105,37 +105,37 @@ export async function updateAsamblea(req, res) {
 
         if (error) return res.status(400).json({ message: error.message });
 
-        const asamblea = await asambleaRepository.findOne({ where: { id } });
-        if (!asamblea) return res.status(404).json({ message: "Asamblea no encontrada." });
+        const career = await careerRepository.findOne({ where: { id } });
+        if (!career) return res.status(404).json({ message: "Career no encontrada." });
 
-        asamblea.description = description || asamblea.description;
-        asamblea.date = date || asamblea.date;
-        asamblea.creatorId = creatorId;
+        career.description = description || career.description;
+        career.date = date || career.date;
+        career.creatorId = creatorId;
         if (url !== undefined) {
-            asamblea.url = url
+            career.url = url
         }
         if (place !== undefined) {
-            asamblea.place = place 
+            career.place = place 
         }
-        if (asamblea.place === null && asamblea.url === null) {
+        if (career.place === null && career.url === null) {
             return res.status(400).json({ message: "El URL y el lugar no pueden ser ambos nulos" });
         }
 
 
-        await asambleaRepository.save(asamblea);
+        await careerRepository.save(career);
 
         res
             .status(200)
-            .json({ message: "Asamblea actualizada correctamente", data: asamblea });
+            .json({ message: "Career actualizada correctamente", data: career });
     } catch (error) {
-        console.error("Error al actualizar asamblea", error);
-        res.status(500).json({ message: "Error al actualizar asamblea." });
+        console.error("Error al actualizar career", error);
+        res.status(500).json({ message: "Error al actualizar career." });
     }
 }
 
-export async function deleteAsamblea(req, res) {
+export async function deleteCareer(req, res) {
     try {
-        const asambleaRepository = AppDataSource.getRepository(Asamblea);
+        const careerRepository = AppDataSource.getRepository(Career);
         const { id } = req.params;
 
         const assertValidIdResult = assertValidId(id, req, res);
@@ -143,14 +143,14 @@ export async function deleteAsamblea(req, res) {
             return assertValidIdResult
         }
 
-        const asamblea = await asambleaRepository.findOne({ where: { id } });
-        if (!asamblea) return res.status(404).json({ message: "Asamblea no encontrada." });
+        const career = await careerRepository.findOne({ where: { id } });
+        if (!career) return res.status(404).json({ message: "Career no encontrada." });
 
-        await asambleaRepository.remove(asamblea);
+        await careerRepository.remove(career);
 
-        res.status(200).json({ message: "Asamblea eliminada correctamente" });
+        res.status(200).json({ message: "Career eliminada correctamente" });
     } catch (error) {
-        console.error("Error al eliminar asamblea", error);
-        res.status(500).json({ message: "Error al eliminar asamblea." });
+        console.error("Error al eliminar career", error);
+        res.status(500).json({ message: "Error al eliminar career." });
     }
 }

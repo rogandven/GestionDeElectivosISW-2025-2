@@ -63,6 +63,7 @@ export const userCreateValidation = Joi.object({
     password: Joi.any().required(),
     role: Joi.any().required(),
     generation: Joi.any().required(),
+    careerAcronym: Joi.any().required(),
 }).unknown(false);
 
 export const userUpdateValidation = Joi.object({
@@ -73,6 +74,7 @@ export const userUpdateValidation = Joi.object({
     password: Joi.any(),
     role: Joi.any(),
     generation: Joi.any(),
+    careerAcronym: Joi.any().required(),
 }).unknown(false);
 
 export const userLoginValidation = Joi.object({

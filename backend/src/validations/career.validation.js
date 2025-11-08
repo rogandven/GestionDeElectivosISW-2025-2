@@ -5,7 +5,7 @@ import { MIN_NAME_LENGTH, MAX_NAME_LENGTH } from "../constants/validationConstan
 import { acronymValidation } from "./modules/acronym.validation.js";
 // Esquema de validación para el registro de usuarios
 export const careerIntegrityValidation = Joi.object({
-  acronym: acronymValidation(),
+  acronym: acronymValidation,
   name: Joi.string()
     .min(MIN_NAME_LENGTH)
     .max(MAX_NAME_LENGTH)
