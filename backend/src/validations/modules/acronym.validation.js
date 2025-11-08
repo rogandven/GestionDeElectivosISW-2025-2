@@ -2,7 +2,7 @@
 import Joi from "joi";
 import { MIN_ACRONYM_LENGTH, MAX_ACRONYM_LENGTH } from "../constants/validationConstants.js";
 
-const acronymValidation = Joi.string()
+export const acronymValidation = Joi.string()
     .min(MIN_ACRONYM_LENGTH)
     .max(MAX_ACRONYM_LENGTH)
     .pattern(/^[A-Z]+$/)
