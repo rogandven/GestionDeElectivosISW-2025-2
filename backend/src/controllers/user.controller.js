@@ -37,9 +37,14 @@ export async function getUserById(req, res) {
 export async function updateUserById(req, res) {
   try {
     // Obtener el repositorio de usuarios y buscar un usuario por ID
+    const { error1 } = userIntegrityValidation.validate(req.body);
+    if (error1) return res.status(400).json({ message: error1.message });
+    const { error2 } = userCreateValidation.validate(req.body);
+    if (error2) return res.status(400).json({ message: error2.message });    
+
     const userRepository = AppDataSource.getRepository(User);
     const { id } = req.params;
-    const { username, email, rut } = req.body;
+    const { username, email, rut, full_name, role, careerAcronym } = req.body;
     const user = await userRepository.findOne({ where: { id } });
 
     // Si no se encuentra el usuario, devolver un error 404

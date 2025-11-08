@@ -18,10 +18,13 @@ export async function register(req, res) {
   try {
     // Obtener el repositorio de usuarios y validar los datos de entrada
     const userRepository = AppDataSource.getRepository(User);
-    const { username, rut, email, password } = req.body;
+    const { username, rut, email, password, full_name, careerAcronym } = req.body;
     
-    const { error } = registerValidation.validate(req.body);
-    if (error) return res.status(400).json({ message: error.message });
+    // const { error } = registerValidation.validate(req.body);
+    const { error1 } = userIntegrityValidation.validate(req.body);
+    if (error1) return res.status(400).json({ message: error1.message });
+    const { error2 } = userCreateValidation.validate(req.body);
+    if (error2) return res.status(400).json({ message: error2.message });    
 
     // Verificar si el usuario ya existe verificando email, rut y username
     const existingEmailUser = await userRepository.findOne({
@@ -47,6 +50,8 @@ export async function register(req, res) {
       username,
       email,
       rut,
+      full_name, 
+      careerAcronym,
       password: await encryptPassword(password),
     });
     await userRepository.save(newUser);
@@ -68,8 +73,11 @@ export async function login(req, res) {
     // Obtener el repositorio de usuarios y validar los datos de entrada
     const userRepository = AppDataSource.getRepository(User);
     const { email, password } = req.body;
-    const { error } = loginValidation.validate(req.body);
-    if (error) return res.status(400).json({ message: error.message });
+
+    const { error1 } = userIntegrityValidation.validate(req.body);
+    if (error1) return res.status(400).json({ message: error1.message });
+    const { error2 } = userLoginValidation.validate(req.body);
+    if (error2) return res.status(400).json({ message: error2.message });    
 
     // Verificar si el usuario existe y si la contraseña es correcta
     const userFound = await userRepository.findOne({ where: { email } });
@@ -90,6 +98,8 @@ export async function login(req, res) {
       email: userFound.email,
       rut: userFound.rut,
       rol: userFound.role,
+      full_name: userFound.full_name,
+      careerAcronym: userFound.careerAcronym,
     };
     const accessToken = jwt.sign(payload, SESSION_SECRET, { expiresIn: "1d" });
 
