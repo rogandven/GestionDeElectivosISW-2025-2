@@ -23,7 +23,6 @@ export const UserEntity = new EntitySchema({
         },
         full_name: {
             type: String,
-            unique: true,
             nullable: false,
         },
         email: {
