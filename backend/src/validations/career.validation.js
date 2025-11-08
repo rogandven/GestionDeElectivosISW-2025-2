@@ -29,4 +29,8 @@ export const careerEditingValidation = Joi.object({
   subjects: Joi.any(),
 }).unknown(false);
 
+export const careerFindingValidation = Joi.object({
+  acornym: Joi.any.required,
+}).unknown(false);
+
 export default careerIntegrityValidation;

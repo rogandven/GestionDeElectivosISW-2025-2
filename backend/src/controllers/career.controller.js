@@ -1,6 +1,6 @@
 import { AppDataSource } from "../config/configDb.js";
 import Career from "../entity/career.entity.js";
-import { careerIntegrityValidation, careerCreationValidation } from "../validations/career.validation.js";
+import { careerIntegrityValidation, careerCreationValidation, careerFindingValidation } from "../validations/career.validation.js";
 
 const RELATIONS = ["subject", "user"];
 
@@ -57,10 +57,24 @@ export async function createCareer(req, res) {
 export async function getCareerById(req, res) {
     try {
         const careerRepository = AppDataSource.getRepository(Career);
-        const { id } = req.params;
+        const idObject = {acronym: req.params.acronym};
+        var career = undefined;
+
+        let result = careerIntegrityValidation.validate(idObject);
+        if (result.error) {
+            return res.status(400).json({ message: result.error.message });
+        }        
+        result = careerFindingValidation.validate(idObject);
+        if (result.error) {
+            return res.status(400).json({ message: result.error.message });
+        }
+        if (!(career = careerRepository.findOneBy(idObject))) {
+            return res.status(404).json({ message: "Carrera no encontrada." });
+        }
+        return res.status(200).json({message: "Carrera encontrada con éxito!", career: career});
     } catch (error) {
-        console.error("Error al encontrar career", error);
-        res.status(500).json({ message: "Error al encontrar career." });
+        console.error("Error al encontrar carrera", error);
+        return res.status(500).json({ message: "Error al encontrar carrera.", error: error });
     }
 }
 
