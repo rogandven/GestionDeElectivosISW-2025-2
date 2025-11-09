@@ -1,4 +1,4 @@
-import { VALID_ROLES } from "../../constants/validationConstants.js";
+import { VALID_ROLES } from "../../constants/roleConstants.js";
 
 export const validateRole = (role, helper) => {
     if (!role) {
