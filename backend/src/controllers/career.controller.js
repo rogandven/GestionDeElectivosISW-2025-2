@@ -2,7 +2,7 @@ import { AppDataSource } from "../config/configDb.js";
 import Career from "../entity/career.entity.js";
 import { careerIntegrityValidation, careerCreationValidation, careerFindingValidation, careerEditingValidation } from "../validations/career.validation.js";
 
-const RELATIONS = ["subject", "user"];
+const RELATIONS = ["subject"];
 
 export async function getCareers(req, res) {
     try {
@@ -12,8 +12,9 @@ export async function getCareers(req, res) {
         });
         res.status(200).json({ data: careers });
     } catch (error) {
+        throw error;
         console.error("Error al obtener las carreras", error);
-        res.status(500).json({ message: "Error al obtener las carreras" });
+        res.status(500).json({ message: "Error al obtener las carreras", error: error.message });
     }
 }
 
