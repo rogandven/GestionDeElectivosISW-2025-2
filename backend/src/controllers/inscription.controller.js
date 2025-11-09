@@ -130,7 +130,7 @@ export async function deleteInscription(req, res) {
         } 
         await queryRunner.commitTransaction();
         await queryRunner.release();
-        return res.status(200).json({ message: "¡Carrera eliminada con éxito!" });
+        return res.status(200).json({ message: "¡Inscripcion eliminada con éxito!" });
     } catch (error) {
         console.error("Error al eliminar inscripcion", error);
         res.status(500).json({ message: "Error al eliminar inscripcion" });
