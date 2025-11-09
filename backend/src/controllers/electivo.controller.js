@@ -120,10 +120,12 @@ export async function updateElectivoById(req, res) {
       .json({ message: "Electivo actualizado exitosamente.", data: electivos });
   } catch (error) {
     console.error("Error en electivo.controller.js -> updateElectivoById(): ", error);
-"use strict" ;
-import Electivo from "../entity/electivo.entity.js";
-import { AppDataSource } from "../config/configDb.js";
+  }
+}
+/* import Electivo from "../entity/electivo.entity.js";
+import { AppDataSource } from "../config/configDb.js"; */
 
+/*
 export async function getElectivos(req, res) {
   try {
    
@@ -135,6 +137,8 @@ export async function getElectivos(req, res) {
     res.status(500).json({ message: "Error interno del servidor." });
   }
 }
+*/
+/*
 export async function createElectivo(req, res) {
   try {
   
@@ -154,6 +158,7 @@ export async function createElectivo(req, res) {
     res.status(500).json({ message: "Error interno del servidor." });
   }
 }
+*/
 
 export async function deleteElectivoById(req, res) {
   try {
@@ -207,7 +212,7 @@ export async function getElectivos(req, res) {
 export async function deleteElectivo(req, res) {
   try {
    
-    const electivoRepository = AppDataSource.getRepository(Electivo);
+    const electivoRepository = AppDataSource.getRepository(ElectivoEntity);
     const { id } = req.params;
     const electivo = await electivoRepository.findOne({ where: { id } });
  
@@ -227,7 +232,7 @@ export async function deleteElectivo(req, res) {
 export async function updateElectivo(req, res) {
     try {
       
-        const electivoRepository = AppDataSource.getRepository(Electivo);
+        const electivoRepository = AppDataSource.getRepository(ElectivoEntity);
         const { id } = req.params;
         const { nombre, descripcion, creditos } = req.body;
         const electivo = await electivoRepository.findOne({ where: { id } });

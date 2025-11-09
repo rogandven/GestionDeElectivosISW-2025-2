@@ -3,7 +3,7 @@
 import { EntitySchema } from "typeorm";
 
 export const ClaseEntity = new EntitySchema({
-    name: "Clase",
+    name: "ClaseEntity",
     tableName: "clases",
     columns: {
         id_electivo: {

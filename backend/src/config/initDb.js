@@ -48,43 +48,53 @@ export async function createUsers() {
 
 
 //Función para crear electivos de prueba
-const electivoRepo = AppDataSource.getRepository(ElectivoEntity);
-const count = await electivoRepo.count();
-if (count === 0) {
-  const electivosIniciales = [
-    {
-      nombre: "Desarrollo Web Avanzado",
-      cupos: 30,
-      inscritos: 22,
-      apertura: "2025-03-01",
-      cierre: "2025-03-15",
-      area: "Desarrollo",
-      descripcion:
-        "Este electivo profundiza en frameworks modernos como React, Node y prácticas DevOps básicas.",
-    },
-    {
-      nombre: "Investigación en Inteligencia Artificial",
-      cupos: 25,
-      inscritos: 20,
-      apertura: "2025-04-10",
-      cierre: "2025-04-30",
-      area: "Investigación",
-      descripcion:
-        "En este electivo se revisan metodologías de investigación aplicadas al machine learning y deep learning.",
-    },
-    {
-      nombre: "Comunicación y Liderazgo",
-      cupos: 40,
-      inscritos: 33,
-      apertura: "2025-05-05",
-      cierre: "2025-05-20",
-      area: "Habilidades Sociales",
-      descripcion:
-        "El curso desarrolla habilidades interpersonales, trabajo en equipo y liderazgo efectivo.",
-    },
-  ];
-  await electivoRepo.save(electivosIniciales);
-  console.log("Electivos insertados");
+export async function createElectivos() {
+    const electivoRepo = AppDataSource.getRepository(ElectivoEntity);
+    const count = await electivoRepo.count();
+    if (count === 0) {
+        const electivosIniciales = [
+            {
+            nombre: "Desarrollo Web Avanzado",
+            cupos: 30,
+            inscritos: 22,
+            apertura: "2025-03-01",
+            cierre: "2025-03-15",
+            area: "Desarrollo",
+            descripcion:
+                "Este electivo profundiza en frameworks modernos como React, Node y prácticas DevOps básicas.",
+            },
+            {
+            nombre: "Investigación en Inteligencia Artificial",
+            cupos: 25,
+            inscritos: 20,
+            apertura: "2025-04-10",
+            cierre: "2025-04-30",
+            area: "Investigación",
+            descripcion:
+                "En este electivo se revisan metodologías de investigación aplicadas al machine learning y deep learning.",
+            },
+            {
+            nombre: "Comunicación y Liderazgo",
+            cupos: 40,
+            inscritos: 33,
+            apertura: "2025-05-05",
+            cierre: "2025-05-20",
+            area: "Habilidades Sociales",
+            descripcion:
+                "El curso desarrolla habilidades interpersonales, trabajo en equipo y liderazgo efectivo.",
+            },
+        ];
+        for (const electivo of electivosIniciales) {
+            console.log(JSON.stringify(electivo));
+            /* await electivoRepo.save((
+                electivoRepo.create(electivo)
+            ));
+            console.log(`Elecitvo '${electivo.nombre}' creado exitosamente.`); */
+        }
+
+    await electivoRepo.save(electivosIniciales);
+    console.log("Electivos insertados");
+    }
 }
 /*
 "use strict";
