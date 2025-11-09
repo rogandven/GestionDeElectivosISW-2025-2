@@ -14,7 +14,7 @@ export const careerIntegrityValidation = Joi.object({
       "string.max": `El acrónimo no puede exceder los ${String(MAX_NAME_LENGTH)} caracteres.`,
       "string.empty": "El acrónimo es obligatorio.",
     }),
-  subjects: Joi.array().items(Joi.integer().positive().required()), 
+  subjects: Joi.array().items(Joi.number().integer().positive().required()), 
 });
 
 export const careerCreationValidation = Joi.object({
@@ -30,7 +30,7 @@ export const careerEditingValidation = Joi.object({
 }).unknown(false);
 
 export const careerFindingValidation = Joi.object({
-  acornym: Joi.any.required,
+  acronym: Joi.any().required()
 }).unknown(false);
 
 export default careerIntegrityValidation;

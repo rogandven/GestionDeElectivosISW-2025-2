@@ -1,6 +1,6 @@
 import { AppDataSource } from "../config/configDb.js";
 import Subject from "../entity/subject.entity.js";
-import { subjectCreationValidation, subjectIntegrityValidation, subjectCreationValidation, subjectFindingValidation, subjectEditingValidation } from "../validations/subject.validation.js";
+import { subjectIntegrityValidation, subjectCreationValidation, subjectFindingValidation, subjectEditingValidation } from "../validations/subject.validation.js";
 
 const RELATIONS = ['subjectTemplate'];
 

@@ -1,6 +1,6 @@
 import { AppDataSource } from "../config/configDb.js";
 import SubjectTemplate from "../entity/subject_template.entity.js";
-import { subjectTemplateCreationValidation, subjectTemplateIntegrityValidation, subjectTemplateCreationValidation, subjectTemplateFindingValidation, subjectTemplateEditingValidation } from "../validations/subjectTemplate.validation.js";
+import { subjectTemplateIntegrityValidation, subjectTemplateCreationValidation, subjectTemplateFindingValidation, subjectTemplateEditingValidation } from "../validations/subject_template.validation.js";
 
 export async function getSubjectTemplates(req, res) {
     try {

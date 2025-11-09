@@ -10,10 +10,10 @@ export const scheduleIntegrityValidation = Joi.object({
 });
 
 export const scheduleCreationValidation = Joi.object({
-    start_time: Joi.any.required(),
-    end_time: Joi.any.required(),
-    classroom: Joi.any.required(),
-    subjectId: Joi.any.required(),
+    start_time: Joi.any().required(),
+    end_time: Joi.any().required(),
+    classroom: Joi.any().required(),
+    subjectId: Joi.any().required(),
 }).unknown(false);
 
 export const scheduleEditingValidation = Joi.object({
@@ -22,5 +22,9 @@ export const scheduleEditingValidation = Joi.object({
     classroom: Joi.any(),
     subjectId: Joi.any(),
 }).unknown(false);
+
+export const scheduleFindingValidation = Joi.object({
+    id: Joi.number().integer().positive().required(),
+});
 
 export default scheduleIntegrityValidation;

@@ -1,4 +1,4 @@
-import { VALID_STATUS_ARRAY } from "../constants/validationConstants.js";
+import { VALID_STATUS_ARRAY } from "../../constants/validationConstants.js";
 
 export const validateStatus = (status, helper) => {
     if (!status) {

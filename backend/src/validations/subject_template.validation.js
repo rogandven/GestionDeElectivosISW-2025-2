@@ -1,6 +1,6 @@
 "use strict";
 import Joi from "joi";
-import { MIN_NAME_LENGTH, MAX_NAME_LENGTH, MIN_DESC_LENGTH, MAX_DESC_LENGTH, MIN_SPOTS, MAX_SPOTS, MIN_CREDITS, MAX_CREDITS } from "./constants/validationConstants.js";
+import { MIN_NAME_LENGTH, MAX_NAME_LENGTH, MIN_DESC_LENGTH, MAX_DESC_LENGTH, MIN_SPOTS, MAX_SPOTS, MIN_CREDITS, MAX_CREDITS } from "../constants/validationConstants.js";
 import { validateTimeStamp } from "./modules/timestamp.validation.js";
 
 export const subjectTemplateIntegrityValidation = Joi.object({
@@ -26,5 +26,9 @@ export const subjectTemplateEditingValidation = Joi.object({
     required_credits: Joi.any(),
     minimum_semester: Joi.any(),
 }).unknown(false);
+
+export const subjectTemplateFindingValidation = Joi.object({
+    id: Joi.number().integer().positive().required(),
+});
 
 export default subjectTemplateIntegrityValidation;

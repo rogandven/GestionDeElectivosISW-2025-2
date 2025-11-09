@@ -1,6 +1,6 @@
 import { AppDataSource } from "../config/configDb.js";
 import Inscription from "../entity/inscription.entity.js";
-import { inscriptionCreationValidation, inscriptionIntegrityValidation, inscriptionCreationValidation, inscriptionFindingValidation, inscriptionEditingValidation } from "../validations/inscription.validation.js";
+import { inscriptionIntegrityValidation, inscriptionCreationValidation, inscriptionFindingValidation, inscriptionEditingValidation } from "../validations/inscription.validation.js";
 
 const RELATIONS = ['user', 'subject'];
 

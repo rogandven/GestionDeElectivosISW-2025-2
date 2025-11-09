@@ -1,6 +1,6 @@
 import { AppDataSource } from "../config/configDb.js";
 import Schedule from "../entity/schedule.entity.js";
-import { scheduleCreationValidation, scheduleIntegrityValidation, scheduleCreationValidation, scheduleFindingValidation, scheduleEditingValidation } from "../validations/schedule.validation.js";
+import { scheduleIntegrityValidation, scheduleCreationValidation, scheduleFindingValidation, scheduleEditingValidation } from "../validations/schedule.validation.js";
 
 const RELATIONS = ['subject'];
 
