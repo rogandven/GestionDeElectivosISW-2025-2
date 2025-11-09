@@ -10,6 +10,7 @@ import { SESSION_SECRET } from "../config/configEnv.js";
   loginValidation,
 } from "../validations/auth.validation.js"; */
 import { userCreateValidation, userLoginValidation, userUpdateValidation, userIntegrityValidation } from "../validations/user.validation.js";
+import { doesCareerExist } from "./career.controller.js";
 
 
 // Controlador de autenticación
@@ -47,6 +48,10 @@ export async function register(req, res) {
         .json({ message: "Nombre de usuario ya registrado." });
 
     // Crear un nuevo usuario y guardar en la base de datos
+    if (!doesCareerExist(careerAcronym)) {
+      return res.status(404).json({ message: "Carrera no existe."});
+    }
+
     const newUser = userRepository.create({
       username,
       email,
@@ -61,7 +66,6 @@ export async function register(req, res) {
 
     // Excluir la contraseña del objeto de respuesta
     const { contraseña, ...dataUser } = newUser;
-
     res
       .status(201)
       .json({ message: "Usuario registrado exitosamente!", data: dataUser });

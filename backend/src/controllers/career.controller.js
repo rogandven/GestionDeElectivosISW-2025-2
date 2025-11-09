@@ -148,3 +148,14 @@ export async function deleteCareer(req, res) {
         res.status(500).json({ message: "Error al eliminar carrera" });
     }
 }
+
+export async function doesCareerExist(career) {
+    if (!career || typeof(career) !== 'string') {
+        return false;
+    }
+    const careerRepository = AppDataSource.getRepository(Career);
+    if(!(await careerRepository.find({acronym: career}))) {
+        return false;
+    }
+    return true;
+}
