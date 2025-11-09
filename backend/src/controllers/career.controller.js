@@ -154,7 +154,10 @@ export async function doesCareerExist(career) {
         return false;
     }
     const careerRepository = AppDataSource.getRepository(Career);
-    if(!(await careerRepository.find({acronym: career}))) {
+    const condition = {
+        acronym: career.toString()
+    }
+    if(!(await careerRepository.findOne({where: condition}))) {
         return false;
     }
     return true;
