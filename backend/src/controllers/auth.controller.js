@@ -1,7 +1,8 @@
 "use strict";
 
 import User from "../entity/user.entity.js";
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from "../config/configEnv.js";
 import { encryptPassword, comparePassword } from "../helpers/bcrypt.helper.js";
 import { AppDataSource } from "../config/configDb.js";
 import { SESSION_SECRET } from "../config/configEnv.js";
@@ -83,6 +84,7 @@ export async function login(req, res) {
 
     // Generar un token JWT y enviarlo al cliente
     const payload = {
+      id : userFound.id,
       username: userFound.username,
       email: userFound.email,
       rut: userFound.rut,
