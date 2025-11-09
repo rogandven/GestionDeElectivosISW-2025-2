@@ -93,6 +93,7 @@ export async function updateSubject(req, res) {
         }
         const queryRunner = AppDataSource.createQueryRunner();
         await queryRunner.startTransaction();
+        data.id = originalId;
         try {
             await subjectRepository.save(data);
         } catch (error) {
