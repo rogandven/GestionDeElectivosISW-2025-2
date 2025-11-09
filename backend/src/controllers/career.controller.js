@@ -46,6 +46,7 @@ export async function createCareer(req, res) {
             await queryRunner.release();
             return res.status(500).json({ message: "Error al crear carrera.", error: error });
         } 
+        await queryRunner.commitTransaction();
         await queryRunner.release();
         return res.status(200).json({ message: "¡Carrera creada con éxito!", error: data });
     } catch (error) {
@@ -108,6 +109,7 @@ export async function updateCareer(req, res) {
             await queryRunner.release();
             return res.status(500).json({ message: "Error al editar carrera.", error: error });
         } 
+        await queryRunner.commitTransaction();
         await queryRunner.release();
         return res.status(200).json({ message: "¡Carrera editada con éxito!", data: data });
     } catch (error) {
@@ -121,11 +123,24 @@ export async function deleteCareer(req, res) {
         const careerRepository = AppDataSource.getRepository(Career);
         const idObject = {acronym: req.params.acronym};
 
-        if (await careerRepository.delete(idObject)) {
-
-        }
+        const queryRunner = AppDataSource.createQueryRunner();
+        await queryRunner.startTransaction();
+        try {
+            const amount = await careerRepository.delete(idObject);
+            if (amount <= 0 || amount > 1) {
+                throw new Error(`Se borraron ${toString(amount)} carreras`);
+            }
+        } catch (error) {
+            console.error(error);
+            await queryRunner.rollbackTransaction();
+            await queryRunner.release();
+            return res.status(500).json({ message: "Error al eliminar carrera.", error: error });
+        } 
+        await queryRunner.commitTransaction();
+        await queryRunner.release();
+        return res.status(200).json({ message: "¡Carrera eliminada con éxito!" });
     } catch (error) {
-        console.error("Error al eliminar career", error);
-        res.status(500).json({ message: "Error al eliminar career." });
+        console.error("Error al eliminar carrera", error);
+        res.status(500).json({ message: "Error al eliminar carrera" });
     }
 }
