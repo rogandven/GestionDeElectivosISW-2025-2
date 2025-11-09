@@ -1,7 +1,7 @@
 "use strict";
 import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
-
+import { ADMIN_ROLES } from "../constants/roleConstants.js";
 // Función middleware para verificar si el usuario es administrador
 export async function isAdmin(req, res, next) {
   try {
@@ -16,7 +16,7 @@ export async function isAdmin(req, res, next) {
     const rolUser = userFound.role;
 
     // Si el rol no es administrador, devolver un error 403
-    if (rolUser !== "administrador")
+    if (!(ADMIN_ROLES.includes(rolUser)))
       return res
         .status(403)
         .json({

@@ -1,3 +1,5 @@
+import { ADMIN_ROLE_1, ADMIN_ROLE_2, VALID_ROLES, ADMIN_ROLES } from "./roleConstants.js";
+
 export const MIN_ACRONYM_LENGTH = 1;
 export const MAX_ACRONYM_LENGTH = 20;
 
@@ -18,10 +20,7 @@ export const APPROVED = 'APROBADA';
 export const REJECTED = 'RECHAZADA';
 export const VALID_STATUS_ARRAY = [AWAITING, APPROVED, REJECTED];
 
-export const ADMIN_ROLE_1 = 'PROFESOR';
-export const ADMIN_ROLE_2 = 'ADMINISTRADOR';
-export const USER_ROLE = 'ESTUDIANTE';
-export const VALID_ROLES = [ADMIN_ROLE_1, ADMIN_ROLE_2, USER_ROLE];
+
 
 export const USERNAME_REGEXP = /^[a-zA-Z0-9_]+$/;
 export const MIN_USERNAME = 3;
@@ -42,4 +41,7 @@ export const NAME_REGEXP = /^[a-zA-Z\s,.'\-\pL]+$/;
 export const MIN_FULL_NAME = MIN_USERNAME;
 export const MAX_FULL_NAME = MAX_USERNAME;
 
-
+export const ADMIN_ROLE_1 = ADMIN_ROLE_1;
+export const ADMIN_ROLE_2 = ADMIN_ROLE_2;
+export const VALID_ROLES = VALID_ROLES;
+export const ADMIN_ROLES = ADMIN_ROLES;

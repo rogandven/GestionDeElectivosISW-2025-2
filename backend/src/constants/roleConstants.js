@@ -1,0 +1,5 @@
+export const ADMIN_ROLE_1 = 'PROFESOR';
+export const ADMIN_ROLE_2 = 'ADMINISTRADOR';
+export const USER_ROLE = 'ESTUDIANTE';
+export const VALID_ROLES = [ADMIN_ROLE_1, ADMIN_ROLE_2, USER_ROLE];
+export const ADMIN_ROLES = [ADMIN_ROLE_1, ADMIN_ROLE_2];
