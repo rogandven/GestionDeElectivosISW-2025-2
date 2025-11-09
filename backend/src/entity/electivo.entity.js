@@ -4,7 +4,7 @@ import { EntitySchema } from "typeorm";
 
 export const ElectivoEntity = new EntitySchema({
     name: "Electivo",
-    tableName: "electivos",
+    tableName: "Electivo",
     columns: {
         id: {
             type: Number,
@@ -13,18 +13,29 @@ export const ElectivoEntity = new EntitySchema({
         },
         nombre: {
             type: String,
-            unique: true,
+            unique: false,
             nullable: false,
         },
-        descripcion: { 
+        profesor: {
             type: String,
-            nullable: true,
+            unique: false,
+            nullable: false,
+        },
+        cupos: {
+            type: Number,
+            unique: false,
+            nullable: false,
         },
         creditos: {
             type: Number,
-            nullable: false,   
+            unique: false,
+            nullable: false
         },
-    }
+        descripcion: {
+            type: String,
+            nullable: false,
+        },
+    },
 });
 
 export default ElectivoEntity;
