@@ -1,3 +1,64 @@
+/*
+"use strict";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root from '@pages/Root'
+import Home from '@pages/Home'
+import Login from '@pages/Login'
+import Register from '@pages/Register'
+import Error404 from '@pages/Error404'
+import Users from '@pages/Users'
+import Profile from '@pages/Profile'
+import ProtectedRoute from '@components/ProtectedRoute'
+import { getAllowedRoles } from '@services/admin.service.js'
+
+//importo la página de electivos
+import Electivos from "@pages/Electivos";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <Error404 />,
+    children: [
+      {
+        path: "/home",
+        element: <Home />,
+      },
+      
+      {
+        path: "/electivos",
+        element: <Electivos />,
+      },
+
+      {
+        path: "/users",
+        element: (
+          <ProtectedRoute allowedRoles={getAllowedRoles()}>
+            <Users />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      }
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <RouterProvider router={router} />
+);
+*/
 "use strict";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
