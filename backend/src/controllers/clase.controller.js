@@ -18,7 +18,7 @@ export async function asignarClase(req, res) {
   try {
     
     const claseRepository = AppDataSource.getRepository(ClaseEntity);
-    const { sala,horario, cupos, nombreEl, profesor} = req.body;
+    const { nombreEl, profesor, sala, horario, cupos } = req.body;
     const { error } = assignationValidation.validate(req.body);
     if (error) return res.status(400).json({ message: error.message });
 
@@ -31,11 +31,12 @@ export async function asignarClase(req, res) {
 
     
     const newClase = claseRepository.create({
+      nombreEl,
+      profesor,
       sala,
       horario,
       cupos,
-      nombreEl,
-      profesor
+      
     });
     await claseRepository.save(newClase);
 
@@ -80,13 +81,13 @@ export async function getClases(req, res) {
 export async function patchClase(req, res) {
   // const claseId = req.clase.sub; 
   const { id } = req.params;
-  const { sala, horario, cupos } = req.body;
+  const { nombreEl, profesor, sala, horario, cupos } = req.body;
   const { error } = updateValidation.validate(req.body);
   if (error) return res.status(400).json({ message: error.message });
 
   try {
-    const updatedClase = await updateClaseById_Electivo(id, { sala, horario, cupos });
-    handleSuccess(res, 200, "Clase actualizada exitosamente", updatedClase);
+    const updatedClase = await updateClaseById_Electivo(id, { nombreEl, profesor, sala, horario, cupos });
+    handleSuccess(res, 200, "Clase actualizada exitosamente", updatedClase)
   } catch (error) {
     handleErrorClient(res, 500, "Error al actualizar la clase.", error.message);
   }

@@ -3,11 +3,27 @@ import Joi from "joi";
 
 // Esquema de validación para el registro de usuarios
 export const assignationValidation = Joi.object({
+  nombreEl: Joi.string().required().pattern(/^[a-zA-Z0-9 ]+$/).messages({
+    "string.base": "El nombre del electivo debe ser una cadena de caracteres",
+    "string.pattern.base": "El nombre del electivo solo puede contener letras, números y espacios.",
+    "string.empty": "El nombre del electivo es obligatorio.",
+    "string.min": "El nombre del electivo debe tener al menos 3 caracteres.",
+    "string.max": "El nombre del electivo no puede exceder los 30 caracteres.",
+  }),
+
+  profesor: Joi.string().required().pattern(/^[a-zA-Z0-9 ]+$/).messages({
+    "string.base": "El nombre del profesor debe ser una cadena de caracteres",
+    "string.pattern.base": "El nombre del profesor solo puede contener letras, números y espacios.",
+    "string.empty": "El nombre del profesor es obligatorio.",
+    "string.min": "El nombre del profesor debe tener al menos 3 caracteres.",
+    "string.max": "El nombre del profesor no puede exceder los 30 caracteres.",
+  }),
+
   sala: Joi.string()
     .min(3)
     .max(30)
     .required()
-    .pattern(/^[a-zA-Z0-9_]+$/)
+    .pattern(/^[a-zA-Z0-9_ ]+$/)
     .messages({
       "string.pattern.base":
         "La sala solo puede contener letras, números y guiones bajos.",
@@ -35,6 +51,21 @@ export const assignationValidation = Joi.object({
   });
 
 export const updateValidation = Joi.object({
+  nombreEl: Joi.string()
+  .min(3)
+  .max(30)
+  .pattern(/^[a-zA-Z0-9 ]+$/).messages({
+    "string.min": "El nombre del electivo debe tener al menos 3 caracteres.",
+    "string.max": "El nombre del electivo no puede exceder los 30 caracteres.",
+  }),
+
+  profesor: Joi.string().required().pattern(/^[a-zA-Z0-9 ]+$/).messages({
+    "string.base": "El nombre del profesor debe ser una cadena de caracteres",
+    "string.pattern.base": "El nombre del profesor solo puede contener letras, números y espacios.",
+    "string.empty": "El nombre del profesor es obligatorio.",
+    "string.min": "El nombre del profesor debe tener al menos 3 caracteres.",
+    "string.max": "El nombre del profesor no puede exceder los 30 caracteres.",
+  }),
     sala: Joi.string()
     .min(3)
     .max(30)
