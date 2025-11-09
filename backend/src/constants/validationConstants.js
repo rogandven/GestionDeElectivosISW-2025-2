@@ -4,7 +4,7 @@ export const MIN_ACRONYM_LENGTH = 1;
 export const MAX_ACRONYM_LENGTH = 20;
 
 export const MIN_NAME_LENGTH = 3;
-export const MAX_NAME_LENGTH = 40;
+export const MAX_NAME_LENGTH = 60;
 
 export const MIN_DESC_LENGTH = 10;
 export const MAX_DESC_LENGTH = 100;

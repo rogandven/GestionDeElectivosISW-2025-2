@@ -1,6 +1,7 @@
 import { AppDataSource } from "../config/configDb.js";
 import Career from "../entity/career.entity.js";
 import { careerIntegrityValidation, careerCreationValidation, careerFindingValidation, careerEditingValidation } from "../validations/career.validation.js";
+import { subjectExists } from "./subject.controller.js";
 
 const RELATIONS = ["subject"];
 
@@ -31,7 +32,7 @@ export async function createCareer(req, res) {
         if (result.error) {
             return res.status(400).json({ message: result.error.message });
         }
-        if (careerRepository.findOneBy({ acronym: data.acronym })) {
+        if (await careerRepository.findOne({where: { acronym: data.acronym }})) {
             return res.status(400).json({ message: "Carrera ya existe" });
         }
 
@@ -39,13 +40,21 @@ export async function createCareer(req, res) {
         await queryRunner.startTransaction();
         try {
             data.subject = data.subjects;
-            data.subjects = undefined;
+            if (data.subject instanceof Array) {
+                for (let i = 0; i < data.subject.length; i++) {
+                    if (!(await subjectExists(data.subject[i]))) {
+                        throw new Error("Ramo no existe");
+                    }    
+                }
+            } else {
+                throw new Error("Arreglo invalido");
+            }
             careerRepository.save(data);
         } catch (error) {
             console.error(error);
             await queryRunner.rollbackTransaction();
             await queryRunner.release();
-            return res.status(500).json({ message: "Error al crear carrera.", error: error });
+            return res.status(500).json({ message: "Error al crear carrera.", error: error.message ? error.message : "Error desconocido" });
         } 
         await queryRunner.commitTransaction();
         await queryRunner.release();

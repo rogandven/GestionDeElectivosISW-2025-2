@@ -136,3 +136,15 @@ export async function deleteSubject(req, res) {
         res.status(500).json({ message: "Error al eliminar ramo" });
     }
 }
+
+export async function subjectExists(subject) {
+    if (!subject || isNaN(subject)) {
+        return false;
+    }
+    try {
+        const subjectRepository = AppDataSource.getRepository(Subject);
+        return await subjectRepository.findOne({where: {id: subject}});
+    } catch (error) {
+       return false;
+    }
+}

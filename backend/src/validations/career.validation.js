@@ -10,8 +10,8 @@ export const careerIntegrityValidation = Joi.object({
     .min(MIN_NAME_LENGTH)
     .max(MAX_NAME_LENGTH)
     .messages({
-      "string.min": `El acrónimo debe tener al menos ${String(MIN_NAME_LENGTH)} caracteres.`,
-      "string.max": `El acrónimo no puede exceder los ${String(MAX_NAME_LENGTH)} caracteres.`,
+      "string.min": `El nombre debe tener al menos ${String(MIN_NAME_LENGTH)} caracteres.`,
+      "string.max": `El nombre no puede exceder los ${String(MAX_NAME_LENGTH)} caracteres.`,
       "string.empty": "El acrónimo es obligatorio.",
     }),
   subjects: Joi.array().items(Joi.number().integer().positive().required()), 
