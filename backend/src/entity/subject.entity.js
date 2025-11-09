@@ -13,12 +13,12 @@ export const SubjectEntity = new EntitySchema({
         },
         name: {
             type: String,
-            unique: true,
+            unique: false,
             nullable: false,
         },
         description: {
             type: String,
-            unique: true,
+            unique: false,
             nullable: false,
         },        
         spots_per_career: {

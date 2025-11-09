@@ -10,7 +10,7 @@ export const subjectIntegrityValidation = Joi.object({
     required_credits: Joi.number().integer().min(MIN_CREDITS).max(MAX_CREDITS),
     minimum_semester: Joi.string().custom(validateTimeStamp),
     subjectTemplateId: Joi.number().integer(),
-    students: Joi.array().items(Joi.number().integer().positive().required()), 
+    students: Joi.array().items(Joi.number().integer().positive()), 
 });
 
 export const subjectCreationValidation = Joi.object({

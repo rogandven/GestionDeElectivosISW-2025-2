@@ -30,7 +30,7 @@ export async function createSubject(req, res) {
         if (result.error) {
             return res.status(400).json({ message: result.error.message });
         }
-        if (subjectRepository.findOneBy({ start_time: data.start_time, end_time: data.end_time, classroom: data.classroom})) {
+        if (await subjectRepository.findOneBy({ start_time: data.start_time, end_time: data.end_time, classroom: data.classroom})) {
             return res.status(400).json({ message: "Ramo ya existe" });
         }
 
@@ -77,7 +77,7 @@ export async function updateSubject(req, res) {
     try {
         const data = req.body;
         const subjectRepository = AppDataSource.getRepository(Subject);
-        originalId = req.params.id;
+        let originalId = req.params.id;
 
         let result = subjectIntegrityValidation.validate(data);
         if (result.error) {
