@@ -48,7 +48,7 @@ export async function register(req, res) {
         .json({ message: "Nombre de usuario ya registrado." });
 
     // Crear un nuevo usuario y guardar en la base de datos
-    if (!doesCareerExist(careerAcronym)) {
+    if (!(await doesCareerExist(careerAcronym))) {
       return res.status(404).json({ message: "Carrera no existe."});
     }
 
