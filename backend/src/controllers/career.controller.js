@@ -85,7 +85,11 @@ export async function updateCareer(req, res) {
         const careerRepository = AppDataSource.getRepository(Career);
         originalAcronym = req.params.acronym;
 
-        let result = careerIntegrityValidation.validate(data);
+        let result = careerFindingValidation.validate({acronym: originalAcronym});
+        if (result.error) {
+            return res.status(400).json({ message: result.error.message });
+        }    
+        result = careerIntegrityValidation.validate(data);
         if (result.error) {
             return res.status(400).json({ message: result.error.message });
         }        

@@ -23,4 +23,8 @@ export const inscriptionEditingValidation = Joi.object({
     user: Joi.any(),
 }).unknown(false);
 
+export const inscriptionFindingValidation = Joi.object({
+    id: Joi.number().required().integer().positive(),
+})
+
 export default inscriptionIntegrityValidation;
