@@ -1,9 +1,6 @@
 "use strict";
 import { DataSource } from "typeorm"
 import { DATABASE, DB_USERNAME, DB_PORT, HOST, PASSWORD } from "./configEnv.js";
-//
-import { UserEntity } from "../entity/user.entity.js";
-import { ElectivoEntity } from "../entity/electivo.entity.js";
 
 // Configuración de la conexión a la base de datos
 export const AppDataSource = new DataSource({
@@ -13,11 +10,9 @@ export const AppDataSource = new DataSource({
     username: `${DB_USERNAME}`,
     password: `${PASSWORD}`,
     database: `${DATABASE}`,
-    //entities: ["src/entity/**/*.js"],
+    entities: ["src/entity/**/*.js"],
     synchronize: true,
-    logging: false,
-    //
-    entities: [UserEntity, ElectivoEntity],
+    logging: true,
 });
 
 // Función para conectar a la base de datos
