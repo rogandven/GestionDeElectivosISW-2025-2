@@ -56,7 +56,7 @@ export async function createPreinscription(req, res) {
 export async function getPreinscriptionById(req, res) {
     try {
         const preinscriptionRepository = AppDataSource.getRepository(Preinscription);
-        const idObject = {acronym: req.params.id};
+        const idObject = {id: req.params.id};
         var preinscription = undefined;
 
         result = preinscriptionFindingValidation.validate(idObject);
@@ -113,7 +113,7 @@ export async function updatePreinscription(req, res) {
 export async function deletePreinscription(req, res) {
     try {
         const preinscriptionRepository = AppDataSource.getRepository(Preinscription);
-        const idObject = {acronym: req.params.id};
+        const idObject = {id: req.params.id};
 
         const queryRunner = AppDataSource.createQueryRunner();
         await queryRunner.startTransaction();

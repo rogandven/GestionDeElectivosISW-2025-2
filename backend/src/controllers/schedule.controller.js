@@ -56,7 +56,7 @@ export async function createSchedule(req, res) {
 export async function getScheduleById(req, res) {
     try {
         const scheduleRepository = AppDataSource.getRepository(Schedule);
-        const idObject = {acronym: req.params.id};
+        const idObject = {id: req.params.id};
         var schedule = undefined;
 
         result = scheduleFindingValidation.validate(idObject);
@@ -113,7 +113,7 @@ export async function updateSchedule(req, res) {
 export async function deleteSchedule(req, res) {
     try {
         const scheduleRepository = AppDataSource.getRepository(Schedule);
-        const idObject = {acronym: req.params.id};
+        const idObject = {id: req.params.id};
 
         const queryRunner = AppDataSource.createQueryRunner();
         await queryRunner.startTransaction();

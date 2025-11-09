@@ -56,7 +56,7 @@ export async function createInscription(req, res) {
 export async function getInscriptionById(req, res) {
     try {
         const inscriptionRepository = AppDataSource.getRepository(Inscription);
-        const idObject = {acronym: req.params.id};
+        const idObject = {id: req.params.id};
         var inscription = undefined;
 
         result = inscriptionFindingValidation.validate(idObject);
@@ -113,7 +113,7 @@ export async function updateInscription(req, res) {
 export async function deleteInscription(req, res) {
     try {
         const inscriptionRepository = AppDataSource.getRepository(Inscription);
-        const idObject = {acronym: req.params.id};
+        const idObject = {id: req.params.id};
 
         const queryRunner = AppDataSource.createQueryRunner();
         await queryRunner.startTransaction();
