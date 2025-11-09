@@ -18,7 +18,7 @@ export async function createUsers() {
                 username: "Profesor",
                 full_name: "John Doe",
                 rut: "12345678-9",
-                email: "profesor@gmail.com",
+                email: "profesor@ubiobio.cl",
                 password: await encryptPassword("profe123"),
                 role: ADMIN_ROLE_1
             },
@@ -26,7 +26,7 @@ export async function createUsers() {
                 username: "Administrador",
                 full_name: "John Doe",
                 rut: "12345679-9",
-                email: "administrador@gmail.com",
+                email: "administrador@ubiobio.cl",
                 password: await encryptPassword("admin123"),
                 role: ADMIN_ROLE_2
             },            
