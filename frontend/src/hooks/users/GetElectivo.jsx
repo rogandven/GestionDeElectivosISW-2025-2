@@ -7,7 +7,6 @@ export const GetElectivo = () => {
     const fetchElectivos = async () => {
         try {
             const data = await getElectivos();
-            // dataLogged(data);
             setElectivos(data);
         } catch (error) {
             console.error("Error consiguiendo electivos:", error);
@@ -18,8 +17,6 @@ export const GetElectivo = () => {
         try {
             const item = sessionStorage.getItem("electivo");
             const { nombre } = JSON.parse(item ? item : "{}") || "";
-            // console.log("DATA TAL CUAL: ");
-            // console.log(data);
             for (let i = 0; i < data.length; i++) {
                 console.log("DATA SUB " + String(i) + ": ");
                 console.log(data[i]);
@@ -34,7 +31,6 @@ export const GetElectivo = () => {
             }
         } catch (error) {
             console.error(error);
-            // console.error("Error procesando datos de electivo:", (error ? String(error) : "Error desconocido"));
         }
     }
 
