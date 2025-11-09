@@ -19,8 +19,6 @@ export async function createElectivo(req, res) {
     });
     await ElectivoEntityRepository.save(newElectivo);
 
-    // const { dataElectivo } = newElectivo;
-
 
 
     res
@@ -65,7 +63,7 @@ export async function getElectivoById(req, res) {
 
 export async function updateElectivoById(req, res) {
   try {
-    // Obtener el repositorio de usuarios y buscar un usuario por ID
+    // Obtener el repositorio de electivos y buscar un electivo por ID
     const ElectivoEntityRepository = AppDataSource.getRepository(ElectivoEntity);
     const { id } = req.params;
     const { nombre, profesor, cupos, creditos, descripcion } = req.body;
@@ -109,7 +107,7 @@ export async function deleteElectivoById(req, res) {
       return res.status(404).json({ message: "Electivo no encontrado." });
     }
 
-    // Eliminar el usuario de la base de datos
+    // Eliminar el electivo de la base de datos
     await ElectivoEntityRepository.remove(electivos);
 
     res.status(200).json({ message: "Electivo eliminado exitosamente." });

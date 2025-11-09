@@ -12,7 +12,7 @@ router.use(authenticateJwt);
 // Rutas públicas
 router.get("/electivos", getElectivos);
 
-// Rutas para obtener usuarios
+// Rutas para obtener electivos
 router.get("/", getElectivo);
 router.post("/", createElectivo);
 router.get("/:id", getElectivoById);

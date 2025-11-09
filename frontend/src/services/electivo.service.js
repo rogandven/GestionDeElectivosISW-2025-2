@@ -23,6 +23,6 @@ export async function deleteElectivo(electivoId) {
         const response = await axios.delete(`/electivos/${electivoId}`);
         return response.data;
     } catch (error) {
-        console.error("Error al eliminar electivo:", error);
+        console.error("Error al eliminar el electivo:", error);
     }
 }
