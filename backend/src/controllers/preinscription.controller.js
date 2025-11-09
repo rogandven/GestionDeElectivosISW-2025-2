@@ -1,12 +1,12 @@
 import { AppDataSource } from "../config/configDb.js";
-import Prepreinscription from "../entity/preinscription.entity.js";
+import Preinscription from "../entity/preinscription.entity.js";
 import { preinscriptionCreationValidation, preinscriptionIntegrityValidation, preinscriptionCreationValidation, preinscriptionFindingValidation, preinscriptionEditingValidation } from "../validations/preinscription.validation.js";
 
 const RELATIONS = ['user', 'subject'];
 
-export async function getPrepreinscriptions(req, res) {
+export async function getPreinscriptions(req, res) {
     try {
-        const preinscriptionRepository = AppDataSource.getRepository(Prepreinscription);
+        const preinscriptionRepository = AppDataSource.getRepository(Preinscription);
         const preinscriptions = await preinscriptionRepository.find({
             relations: RELATIONS,
         });
@@ -17,10 +17,10 @@ export async function getPrepreinscriptions(req, res) {
     }
 }
 
-export async function createPrepreinscription(req, res) {
+export async function createPreinscription(req, res) {
     try {
         const data = req.body;
-        const preinscriptionRepository = AppDataSource.getRepository(Prepreinscription);
+        const preinscriptionRepository = AppDataSource.getRepository(Preinscription);
 
         let result = preinscriptionIntegrityValidation.validate(data);
         if (result.error) {
@@ -53,9 +53,9 @@ export async function createPrepreinscription(req, res) {
     }
 }
 
-export async function getPrepreinscriptionById(req, res) {
+export async function getPreinscriptionById(req, res) {
     try {
-        const preinscriptionRepository = AppDataSource.getRepository(Prepreinscription);
+        const preinscriptionRepository = AppDataSource.getRepository(Preinscription);
         const idObject = {acronym: req.params.id};
         var preinscription = undefined;
 
@@ -73,10 +73,10 @@ export async function getPrepreinscriptionById(req, res) {
     }
 }
 
-export async function updatePrepreinscription(req, res) {
+export async function updatePreinscription(req, res) {
     try {
         const data = req.body;
-        const preinscriptionRepository = AppDataSource.getRepository(Career);
+        const preinscriptionRepository = AppDataSource.getRepository(Preinscription);
         originalId = req.params.id;
 
         let result = preinscriptionIntegrityValidation.validate(data);
@@ -110,9 +110,9 @@ export async function updatePrepreinscription(req, res) {
     }
 }
 
-export async function deletePrepreinscription(req, res) {
+export async function deletePreinscription(req, res) {
     try {
-        const preinscriptionRepository = AppDataSource.getRepository(Prepreinscription);
+        const preinscriptionRepository = AppDataSource.getRepository(Preinscription);
         const idObject = {acronym: req.params.id};
 
         const queryRunner = AppDataSource.createQueryRunner();
