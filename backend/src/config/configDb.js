@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
     database: `${DATABASE}`,
     entities: ["src/entity/**/*.js"],
     synchronize: true,
-    logging: false,
+    logging: true,
 });
 
 // Función para conectar a la base de datos
