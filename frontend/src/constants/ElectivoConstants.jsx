@@ -1,0 +1,2 @@
+export const CANTIDAD_MAXIMA_DE_CREDITOS = 7;
+export const CANTIDAD_MAXIMA_DE_CUPOS = 60;

@@ -21,7 +21,6 @@ export async function getUserById(req, res) {
     const userRepository = AppDataSource.getRepository(User);
     const { id } = req.params;
     const user = await userRepository.findOne({ where: { id } });
-
     // Si no se encuentra el usuario, devolver un error 404
     if (!user) {
       return res.status(404).json({ message: "Usuario no encontrado." });
@@ -41,7 +40,6 @@ export async function updateUserById(req, res) {
     const { id } = req.params;
     const { username, email, rut } = req.body;
     const user = await userRepository.findOne({ where: { id } });
-
     // Si no se encuentra el usuario, devolver un error 404
     if (!user) {
       return res.status(404).json({ message: "Usuario no encontrado." });

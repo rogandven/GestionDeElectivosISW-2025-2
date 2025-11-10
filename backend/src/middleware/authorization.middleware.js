@@ -10,7 +10,7 @@ export async function isAdmin(req, res, next) {
     const userFound = await userRepository.findOneBy({
       email: req.user?.email,
     });
-    if (!userFound) return res.status(404).json("Usuario no encontrado");
+    if (!userFound) return res.status(404).json({message: "Usuario no encontrado"});
 
     // Verificar el rol del usuario
     const rolUser = userFound.role;

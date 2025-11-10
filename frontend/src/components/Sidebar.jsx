@@ -1,6 +1,7 @@
+/* <<<<<<< seba-avance
 import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "@services/auth.service.js";
-import { FaHome, FaUsers, FaSignOutAlt } from "react-icons/fa";
+import { FaHome, FaUsers, FaSignOutAlt, FaBookOpen } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import "@styles/Sidebar.css";
 
@@ -29,6 +30,13 @@ const Sidebar = () => {
               <FaHome className="icon"/> Inicio
             </NavLink>
           </li>
+
+          <li>
+            <NavLink to="/electivos">
+              <FaBookOpen className="icon" /> Electivos disponibles
+            </NavLink>
+          </li>
+
           {userRole === "administrador" && (
             <li>
               <NavLink to="/users">
@@ -54,3 +62,73 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+=======
+*/
+import { NavLink, useNavigate } from "react-router-dom";
+import { logout } from "@services/auth.service.js";
+import { FaHome, FaUsers, FaSignOutAlt } from "react-icons/fa";
+import { SiBookstack } from "react-icons/si";
+import { CgProfile } from "react-icons/cg";
+import "@styles/Sidebar.css";
+
+const Sidebar = () => {
+  const navigate = useNavigate();
+
+  const user = JSON.parse(sessionStorage.getItem("usuario")) || "";
+  const userRole = user?.rol;
+
+  const logoutSubmit = () => {
+    try {
+      logout();
+      navigate("/login");
+    } catch (error) {
+      console.error("Error al cerrar sesión", error);
+    }
+  };
+
+  return (
+    <div className="sidebar">
+      <h2>Inscripción de electivos</h2>
+      <nav>
+        <ul>
+          <li>
+            <NavLink to="/home">
+              <FaHome className="icon"/> Inicio
+            </NavLink>
+          </li>
+          {userRole === "administrador" && (
+            <li>
+              <NavLink to="/users">
+                <FaUsers className="icon"/> Usuarios
+              </NavLink>
+            </li>
+          )}
+          <li>
+            <NavLink to="/electivo">
+            <SiBookstack className="icon"/> Electivos (Implementacion 1)
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/electivos">
+            <SiBookstack className="icon"/> Electivos (Implementacion 2)
+            </NavLink>
+          </li>          
+          <li>
+            <NavLink to="/profile">
+              <CgProfile className="icon"/> Perfil
+            </NavLink>
+          </li>
+          <li style={{ height: "70%" }}/>
+          <li className="logout">
+            <NavLink to="/login" onClick={logoutSubmit}>
+              <FaSignOutAlt className="icon"/> Cerrar Sesión
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
+};
+
+export default Sidebar;
+// >>>>>>> merge-test
