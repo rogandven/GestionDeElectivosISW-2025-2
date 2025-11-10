@@ -2,7 +2,8 @@ import { AppDataSource } from "../config/configDb.js";
 import Subject from "../entity/subject.entity.js";
 import { subjectIntegrityValidation, subjectCreationValidation, subjectFindingValidation, subjectEditingValidation } from "../validations/subject.validation.js";
 
-const RELATIONS = ['subjectTemplateId'];
+// const RELATIONS = ['subjectTemplateId'];
+const RELATIONS = true;
 
 export async function getSubjects(req, res) {
     try {
@@ -90,8 +91,15 @@ export async function updateSubject(req, res) {
         const queryRunner = AppDataSource.createQueryRunner();
         await queryRunner.startTransaction();
         data.id = originalId;
+        const studentArray = data.students;
+        data.students = undefined;
+        const subjectTemplateId = data.subjectTemplateId;
+        data.subjectTemplateId = undefined;
+        console.log(JSON.stringify(data));
         try {
-            await subjectRepository.save(data);
+
+            
+            await subjectRepository.update({id: originalId}, data);
         } catch (error) {
             console.error(error);
             await queryRunner.rollbackTransaction();
