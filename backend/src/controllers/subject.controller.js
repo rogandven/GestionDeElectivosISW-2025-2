@@ -2,13 +2,13 @@ import { AppDataSource } from "../config/configDb.js";
 import Subject from "../entity/subject.entity.js";
 import { subjectIntegrityValidation, subjectCreationValidation, subjectFindingValidation, subjectEditingValidation } from "../validations/subject.validation.js";
 
-const RELATIONS = ['subjectTemplate'];
+const RELATIONS = ['subjectTemplateId'];
 
 export async function getSubjects(req, res) {
     try {
         const subjectRepository = AppDataSource.getRepository(Subject);
         const subjects = await subjectRepository.find({
-            relations: RELATIONS,
+            relations: true,
         });
         res.status(200).json({ data: subjects });
     } catch (error) {
@@ -30,10 +30,6 @@ export async function createSubject(req, res) {
         if (result.error) {
             return res.status(400).json({ message: result.error.message });
         }
-        if (await subjectRepository.findOneBy({ start_time: data.start_time, end_time: data.end_time, classroom: data.classroom})) {
-            return res.status(400).json({ message: "Ramo ya existe" });
-        }
-
         const queryRunner = AppDataSource.createQueryRunner();
         await queryRunner.startTransaction();
         try {
