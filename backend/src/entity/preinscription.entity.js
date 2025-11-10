@@ -19,21 +19,15 @@ export const PreinscriptionEntity = new EntitySchema({
         status: {
             type: String,
             nullable: false,
-        }
-    },
-    relations: {
-        user: {
-            type: 'many-to-one',
-            target: 'user',
-            inverseSide: 'user',
-            joinTable: true,
         },
-        subject: {
-            type: 'many-to-one',
-            target: 'subject',
-            inverseSide: 'subject',
-            joinTable: true,
-        },                         
+        userId: {
+            type: Number,
+            nullable: false,
+        },
+        subjectId: {
+            type: Number,
+            nullable: false,
+        }
     },
 });
 
