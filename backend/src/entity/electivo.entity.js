@@ -1,6 +1,6 @@
 import { EntitySchema } from "typeorm";
 
-export const ElectivoEntity = new EntitySchema({
+export const ElectivoEntity=new EntitySchema({
   name: "Electivo",
   tableName: "electivos",
   columns: {
@@ -35,3 +35,5 @@ export const ElectivoEntity = new EntitySchema({
     },
   },
 });
+
+export default ElectivoEntity;

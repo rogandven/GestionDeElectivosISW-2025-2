@@ -10,17 +10,14 @@ import {
   loginValidation,
 } from "../validations/auth.validation.js";
 
-// Controlador de autenticación
 
 export async function register(req, res) {
   try {
-    // Obtener el repositorio de usuarios y validar los datos de entrada
     const userRepository = AppDataSource.getRepository(User);
     const { username, rut, email, password } = req.body;
     const { error } = registerValidation.validate(req.body);
     if (error) return res.status(400).json({ message: error.message });
 
-    // Verificar si el usuario ya existe verificando email, rut y username
     const existingEmailUser = await userRepository.findOne({
       where: { email },
     });
@@ -39,16 +36,15 @@ export async function register(req, res) {
         .status(409)
         .json({ message: "Nombre de usuario ya registrado." });
 
-    // Crear un nuevo usuario y guardar en la base de datos
     const newUser = userRepository.create({
       username,
       email,
       rut,
       password: await encryptPassword(password),
+      role: "alumno",//role por defecto
     });
     await userRepository.save(newUser);
 
-    // Excluir la contraseña del objeto de respuesta
     const { contraseña, ...dataUser } = newUser;
 
     res
@@ -62,13 +58,11 @@ export async function register(req, res) {
 
 export async function login(req, res) {
   try {
-    // Obtener el repositorio de usuarios y validar los datos de entrada
     const userRepository = AppDataSource.getRepository(User);
     const { email, password } = req.body;
     const { error } = loginValidation.validate(req.body);
     if (error) return res.status(400).json({ message: error.message });
 
-    // Verificar si el usuario existe y si la contraseña es correcta
     const userFound = await userRepository.findOne({ where: { email } });
     if (!userFound)
       return res
@@ -81,7 +75,6 @@ export async function login(req, res) {
         .status(401)
         .json({ message: "La contraseña ingresada no es correcta" });
 
-    // Generar un token JWT y enviarlo al cliente
     const payload = {
       username: userFound.username,
       email: userFound.email,
@@ -98,7 +91,7 @@ export async function login(req, res) {
 }
 
 export async function logout(req, res) {
-  // Eliminar la cookie de sesión del cliente
+  
   try {
     res.clearCookie("jwt", { httpOnly: true });
     res.status(200).json({ message: "Sesión cerrada exitosamente" });
