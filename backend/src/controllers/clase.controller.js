@@ -21,7 +21,7 @@ export async function asignarClase(req, res) {
     const { nombreEl, profesor, sala, horario, cupos } = req.body;
     const { error } = assignationValidation.validate(req.body);
     if (error) return res.status(400).json({ message: error.message });
-
+        
     const existingHorarioSala = await claseRepository.findOne({
       where: { horario, sala },
     });

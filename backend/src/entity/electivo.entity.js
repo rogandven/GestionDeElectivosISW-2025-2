@@ -22,13 +22,16 @@ export const ElectivoEntity = new EntitySchema({
     },
     apertura: {
       type: "date",
+      nullable: true,
     },
     cierre: {
       type: "date",
+      nullable: true,
     },
     area: {
       type: "varchar",
       length: 100,
+      nullable: true,
     },
     descripcion: {
       type: "text",

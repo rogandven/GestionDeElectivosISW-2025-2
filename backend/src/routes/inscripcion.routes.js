@@ -10,7 +10,7 @@ const router = Router();
 router.post("/Crear", authenticateJwt, CreateInscripciones);
 router.get("/Obtener", authenticateJwt,isAdmin,getInscripciones);
 router.get("/notificar", authenticateJwt, getNotificaciones);
-router.get("/Obtener", authenticateJwt, getInscripcion);
+router.get("/Obtener2", authenticateJwt, getInscripcion);
 router.delete("/Eliminar", authenticateJwt, DeleteInscripciones);
 
 router.get("/admin/en-espera", authenticateJwt, isAdmin, getInscripcionesEnEspera);

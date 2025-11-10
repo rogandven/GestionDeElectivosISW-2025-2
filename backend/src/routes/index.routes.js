@@ -29,6 +29,6 @@ router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/electivos", electivoRoutes);
 router.use("/clases", claseRoutes);
-router.use("/electivos", nowRoutes);
+router.use("/electivos3", nowRoutes);
 router.use("/Inscripciones",inscripcionRoutes);
 export default router;

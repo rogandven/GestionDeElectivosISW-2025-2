@@ -89,8 +89,6 @@ export const updateValidation = Joi.object({
       "number.min": "Los creditos deben ser al menos 2",
       "number.max": "Los creditos no pueden exceder 8",
     })
-  }).unknown(false).messages({
-    "object.unknown": "No se permiten campos adicionales",
-});
+  });
 
 export default createValidation;

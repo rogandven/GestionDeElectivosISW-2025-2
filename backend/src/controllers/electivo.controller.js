@@ -54,7 +54,7 @@ export async function createElectivo(req, res) {
       .status(201)
       .json({ message: "Electivo registrado exitosamente!", data: newElectivo });
   } catch (error) {
-    return res.status(400).json({message: "Error al crear electivo", data: error})
+    return res.status(400).json({message: "Error al crear electivo", data: JSON.stringify(error), message2: error.message});
   }
 }
 
@@ -186,7 +186,7 @@ export async function getElectivos(req, res) {
   try {
     // Obtener el repositorio de electivos y buscar el perfil del electivo autenticado
     const ElectivoEntityRepository = AppDataSource.getRepository(ElectivoEntity);
-    const electivosProfesor = req.electivos.profesor;
+    const electivosProfesor = req.profesor;
     const electivos = await ElectivoEntityRepository.findOne({ where: { profesor: electivosProfesor } });
     
     // Si no se encuentra el electivo, devolver un error 404

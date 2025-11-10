@@ -190,6 +190,8 @@ export async function gestionarInscripcion(req, res) {
     const electivoRepository = AppDataSource.getRepository(ElectivoEntity);
     const { inscripcionId } = req.params;
     const { accion, motivo } = req.body;
+    console.log(accion);
+    console.log(motivo);
 
     if (!accion || !["aprobar", "rechazar"].includes(accion)) {
       return res.status(400).json({ 
