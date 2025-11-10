@@ -13,14 +13,14 @@ export const preinscriptionIntegrityValidation = Joi.object({
 export const preinscriptionCreationValidation = Joi.object({
     status: Joi.any().required(),
     subjectId: Joi.any().required(),
-    user: Joi.any().required(),
+    userId: Joi.any().required(),
 }).unknown(false);
 
 export const preinscriptionEditingValidation = Joi.object({
     date: Joi.string().custom(validateTimeStamp),
     status: Joi.any(),
     subjectId: Joi.any(),
-    user: Joi.any(),
+    userId: Joi.any(),
 }).unknown(false);
 
 export const preinscriptionFindingValidation = Joi.object({

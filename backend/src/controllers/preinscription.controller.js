@@ -20,6 +20,10 @@ export async function getPreinscriptions(req, res) {
 export async function createPreinscription(req, res) {
     try {
         const data = req.body;
+        if (!data) {
+            throw new Error("Datos inválidos");
+        }
+
         const preinscriptionRepository = AppDataSource.getRepository(Preinscription);
 
         let result = preinscriptionIntegrityValidation.validate(data);
