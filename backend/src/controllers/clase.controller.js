@@ -79,11 +79,17 @@ export async function getClases(req, res) {
 } */
 
 export async function patchClase(req, res) {
-  // const claseId = req.clase.sub; 
+  // const claseId = req.clase.sub;
+  const claseRepository = AppDataSource.getRepository(ClaseEntity); 
   const { id } = req.params;
   const { nombreEl, profesor, sala, horario, cupos } = req.body;
   const { error } = updateValidation.validate(req.body);
   if (error) return res.status(400).json({ message: error.message });
+  const existingHorarioSala = await claseRepository.findOne({
+      where: { horario, sala },
+    });
+    if (existingHorarioSala)
+      return res.status(409).json({ message: "Horario y sala ya registrado." });
 
   try {
     const updatedClase = await updateClaseById_Electivo(id, { nombreEl, profesor, sala, horario, cupos });
