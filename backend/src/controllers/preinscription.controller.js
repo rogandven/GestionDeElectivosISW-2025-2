@@ -2,7 +2,7 @@ import { AppDataSource } from "../config/configDb.js";
 import Preinscription from "../entity/preinscription.entity.js";
 import { preinscriptionIntegrityValidation, preinscriptionCreationValidation, preinscriptionFindingValidation, preinscriptionEditingValidation } from "../validations/preinscription.validation.js";
 
-const RELATIONS = ['user', 'subject'];
+const RELATIONS = true;
 
 export async function getPreinscriptions(req, res) {
     try {

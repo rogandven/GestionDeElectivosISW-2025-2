@@ -2,7 +2,7 @@ import { AppDataSource } from "../config/configDb.js";
 import Schedule from "../entity/schedule.entity.js";
 import { scheduleIntegrityValidation, scheduleCreationValidation, scheduleFindingValidation, scheduleEditingValidation } from "../validations/schedule.validation.js";
 
-const RELATIONS = ['subject'];
+const RELATIONS = true;
 
 export async function getSchedules(req, res) {
     try {

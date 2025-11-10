@@ -2,7 +2,7 @@ import { AppDataSource } from "../config/configDb.js";
 import Inscription from "../entity/inscription.entity.js";
 import { inscriptionIntegrityValidation, inscriptionCreationValidation, inscriptionFindingValidation, inscriptionEditingValidation } from "../validations/inscription.validation.js";
 
-const RELATIONS = ['user', 'subject'];
+const RELATIONS = true;
 
 export async function getInscriptions(req, res) {
     try {

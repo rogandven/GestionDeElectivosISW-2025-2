@@ -3,7 +3,7 @@ import Career from "../entity/career.entity.js";
 import { careerIntegrityValidation, careerCreationValidation, careerFindingValidation, careerEditingValidation } from "../validations/career.validation.js";
 import { subjectExists } from "./subject.controller.js";
 
-const RELATIONS = ["subject"];
+const RELATIONS = true;
 
 export async function getCareers(req, res) {
     try {

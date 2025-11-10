@@ -2,7 +2,7 @@
 import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
-const RELATIONS = ["inscription", "preinscription", "career", "subject"];
+const RELATIONS = true;
 
 export async function getUsers(req, res) {
   try {
