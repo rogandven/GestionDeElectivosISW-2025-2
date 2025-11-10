@@ -105,9 +105,14 @@ const Sidebar = () => {
           )}
           <li>
             <NavLink to="/electivo">
-            <SiBookstack className="icon"/> Electivos
+            <SiBookstack className="icon"/> Electivos (Implementacion 1)
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/electivos">
+            <SiBookstack className="icon"/> Electivos (Implementacion 2)
+            </NavLink>
+          </li>          
           <li>
             <NavLink to="/profile">
               <CgProfile className="icon"/> Perfil

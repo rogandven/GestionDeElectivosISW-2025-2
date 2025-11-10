@@ -1,6 +1,6 @@
 "use strict";
 import { useState, useEffect } from "react";
-import "@styles/electivos.css";
+import "@styles/users.css";
 import Swal from "sweetalert2";
 import { getElectivos } from "@services/electivo.service.js";
 
