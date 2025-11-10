@@ -22,3 +22,5 @@ export const EMAIL=process.env.EMAIL;
 export const EMAIL_PROVIDER=process.env.EMAIL_PROVIDER;
 export const EMAIL_PASSWORD=process.env.EMAIL_PASSWORD;
 export const JWT_SECRET=process.env.JWT_SECRET;
+export const DB_HOST = process.env.DB_HOST;
+
