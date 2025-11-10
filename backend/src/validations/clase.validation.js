@@ -59,10 +59,8 @@ export const updateValidation = Joi.object({
     "string.max": "El nombre del electivo no puede exceder los 30 caracteres.",
   }),
 
-  profesor: Joi.string().required().pattern(/^[a-zA-Z0-9 ]+$/).messages({
-    "string.base": "El nombre del profesor debe ser una cadena de caracteres",
+  profesor: Joi.string().pattern(/^[a-zA-Z0-9 ]+$/).messages({
     "string.pattern.base": "El nombre del profesor solo puede contener letras, números y espacios.",
-    "string.empty": "El nombre del profesor es obligatorio.",
     "string.min": "El nombre del profesor debe tener al menos 3 caracteres.",
     "string.max": "El nombre del profesor no puede exceder los 30 caracteres.",
   }),
