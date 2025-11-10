@@ -142,15 +142,17 @@ export async function deleteCareer(req, res) {
         const queryRunner = AppDataSource.createQueryRunner();
         await queryRunner.startTransaction();
         try {
-            const amount = await careerRepository.delete(idObject);
-            if (amount <= 0 || amount > 1) {
-                throw new Error(`Se borraron ${toString(amount)} carreras`);
+            const deleteResult = await careerRepository.delete(idObject);
+            const amount = Number(deleteResult.affected);
+            console.log(amount);
+            if (isNaN(amount) || amount <= 0 || amount > 1) {
+                throw new Error(`Se borraron ${amount} carreras`);
             }
         } catch (error) {
             console.error(error);
             await queryRunner.rollbackTransaction();
             await queryRunner.release();
-            return res.status(500).json({ message: "Error al eliminar carrera.", error: error });
+            return res.status(500).json({ message: "Error al eliminar carrera.", error: error.message ? error.message : "Error desconocido" });
         } 
         await queryRunner.commitTransaction();
         await queryRunner.release();
