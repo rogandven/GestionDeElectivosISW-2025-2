@@ -10,7 +10,6 @@ export const subjectIntegrityValidation = Joi.object({
     required_credits: Joi.number().integer().min(MIN_CREDITS).max(MAX_CREDITS),
     minimum_semester: Joi.string().custom(validateTimeStamp),
     subjectTemplateId: Joi.number().integer(),
-    students: Joi.array().items(Joi.number().integer().positive()), 
 });
 
 export const subjectCreationValidation = Joi.object({
@@ -20,7 +19,6 @@ export const subjectCreationValidation = Joi.object({
     required_credits: Joi.any().required(),
     minimum_semester: Joi.any().required(),
     subjectTemplateId: Joi.any().required(),
-    students: Joi.any().required(),
 }).unknown(false);
 
 export const subjectEditingValidation = Joi.object({
@@ -30,7 +28,6 @@ export const subjectEditingValidation = Joi.object({
     required_credits: Joi.any(),
     minimum_semester: Joi.any(),
     subjectTemplateId: Joi.any(),
-    students: Joi.any(),
 }).unknown(false);
 
 
