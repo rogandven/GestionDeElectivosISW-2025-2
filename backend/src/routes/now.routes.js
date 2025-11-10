@@ -9,6 +9,6 @@ const router = Router();
 router.post("/Crear",authenticateJwt,createElectivo);
 router.get("/Obtener",authenticateJwt,getElectivos);
 router.delete("/Eliminar",authenticateJwt,deleteElectivo);
-router.put("/Actualizar",authenticateJwt,updateElectivo);
+router.put("/Actualizar/:id",authenticateJwt,updateElectivo);
 
 export default router;

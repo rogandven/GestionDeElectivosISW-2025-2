@@ -22,13 +22,13 @@ export async function CreateInscripciones(req, res) {
       return res.status(404).json({ message: "Electivo no encontrado" });
     }
 
- 
     const inscripcionExistente = await inscripcionRepository.findOne({
       where: { 
         userId: userId,
         electivoId: electivoId
       }
     });
+    console.log(inscripcionExistente);
 
     if (inscripcionExistente) {
       if (inscripcionExistente.estado === "rechazada" || inscripcionExistente.estado === "retirada") {
