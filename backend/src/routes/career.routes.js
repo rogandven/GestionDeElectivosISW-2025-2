@@ -9,8 +9,8 @@ const router = Router();
 // Rutas protegidas que requieren autenticación y rol de CEE
 router.post("/", authenticateJwt, isAdmin, createCareer);
 router.get("/", authenticateJwt, isAdmin, getCareers);
-router.get("/:id", authenticateJwt, isAdmin, getCareerById);
-router.put("/:id", authenticateJwt, isAdmin, updateCareer);
-router.delete("/:id", authenticateJwt, isAdmin, deleteCareer);
+router.get("/:acronym", authenticateJwt, isAdmin, getCareerById);
+router.put("/:acronym", authenticateJwt, isAdmin, updateCareer);
+router.delete("/:acronym", authenticateJwt, isAdmin, deleteCareer);
 
 export default router;
