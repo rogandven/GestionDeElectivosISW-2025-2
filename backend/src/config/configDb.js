@@ -1,6 +1,6 @@
 "use strict";
 import { DataSource } from "typeorm"
-import { DATABASE, DB_USERNAME, DB_PORT, HOST, PASSWORD } from "./configEnv.js";
+import { DATABASE, DB_USERNAME, DB_PORT, HOST, PASSWORD, DB_HOST } from "./configEnv.js";
 import ElectivoEntity from "../entity/electivo.entity.js";
 import ClaseEntity from "../entity/clase.entity.js";
 import InscripcionEntity from "../entity/inscripcion.entity.js";
@@ -10,8 +10,8 @@ import PreinscriptionEntity from "../entity/preinscription.entity.js";
 // Configuración de la conexión a la base de datos
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: `${HOST}`,
-    port: `${DB_PORT}`,
+    host: `${DB_HOST || HOST}`,
+    port: `${DB_PORT || PORT}`,
     username: `${DB_USERNAME}`,
     password: `${PASSWORD}`,
     database: `${DATABASE}`,
