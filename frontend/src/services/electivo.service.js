@@ -44,7 +44,7 @@ export async function deleteElectivo(id) {
   }
 }
 ======= */
-import axios from '@services/root.service.js';
+// import axios from '@services/root.service.js';
 
 export async function getElectivos() {
     try {
