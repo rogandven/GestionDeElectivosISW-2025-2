@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const PORT = 443;
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -20,5 +21,16 @@ export default defineConfig({
       '@services': path.resolve(__dirname, './src/services'),
     },
   },
-
+  server: {
+    host: '0.0.0.0',
+    port: PORT,
+    strictPort: true,
+    cors: true
+  },
+  preview: {
+    host: '0.0.0.0',
+    port: PORT,
+    strictPort: true,
+    cors: true
+  },  
 })
