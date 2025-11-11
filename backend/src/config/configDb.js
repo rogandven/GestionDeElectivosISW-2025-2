@@ -7,8 +7,8 @@ import InscripcionEntity from "../entity/inscripcion.entity.js";
 import UserEntity from "../entity/user.entity.js";
 import PreinscriptionEntity from "../entity/preinscription.entity.js";
 
-import UserEntity from "../entity/user.entity.js";
-import ElectivoEntity from "../entity/electivo.entity.js";
+// import UserEntity from "../entity/user.entity.js";
+// import ElectivoEntity from "../entity/electivo.entity.js";
 
 export const AppDataSource = new DataSource({
     type: "postgres",

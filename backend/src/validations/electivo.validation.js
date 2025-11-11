@@ -2,7 +2,7 @@
 "use strict";
 import Joi from "joi";
 
-export const createElectivoValidation = Joi.object({
+export const createValidation = Joi.object({
   nombre: Joi.string()
     .min(3)
     .max(255)
@@ -72,7 +72,7 @@ export const createElectivoValidation = Joi.object({
     }),
 });
 
-export const updateElectivoValidation = Joi.object({
+export const updateValidation = Joi.object({
   nombre: Joi.string().min(3).max(255).messages({
     "string.min": "El nombre debe tener al menos 3 caracteres.",
     "string.max": "El nombre no puede superar los 255 caracteres.",
@@ -112,7 +112,7 @@ export const updateElectivoValidation = Joi.object({
     "object.min": "Debe proporcionar al menos un campo para actualizar.",
   });
 "use strict";
-import Joi from "joi";
+// import Joi from "joi";
 
 /* export const electivoCreationValidation = ({ data }) => {
   return;

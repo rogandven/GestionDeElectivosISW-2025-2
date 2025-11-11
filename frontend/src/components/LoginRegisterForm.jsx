@@ -84,7 +84,7 @@ const LoginRegisterForm = ({ mode = "login", onSubmit, loginError}) => {
                 message: "El correo debe tener como máximo 50 caracteres",
               },
               pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@(ubiobio\.cl|alumnos\.ubiobio\.cl)$/,
+              value: /^[a-zA-Z0-9._%+-]+@(ubiobio\.cl|alumnos\.ubiobio\.cl|gmail\.cl|gmail\.com)$/,
               message:
                 "El correo debe ser institucional de la UBB (@ubiobio.cl o @alumnos.ubiobio.cl)",
             },

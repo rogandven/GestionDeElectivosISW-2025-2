@@ -89,18 +89,22 @@ export async function patchClase(req, res) {
   const { error } = updateValidation.validate(req.body);
  
   if (error) return res.status(400).json({ message: error.message });
-  const existingHorarioSala = await claseRepository.findOne({
+  if (horario && sala) {
+    const existingHorarioSala = await claseRepository.findOne({
       where: { horario, sala },
     });
-    // console.log(existingHorarioSala);
-    if (existingHorarioSala && existingHorarioSala.id_electivo != id)
+    if (existingHorarioSala && existingHorarioSala.id_electivo != id) {
       return res.status(409).json({ message: "Horario y sala ya registrado." });
+    }
+  }
 
   try {
+    console.log(id);
     const updatedClase = await updateClaseById_Electivo(id, { nombreEl, profesor, sala, horario, cupos });
     handleSuccess(res, 200, "Clase actualizada exitosamente", updatedClase)
     // console.log(profesor);
   } catch (error) {
+    console.log(error);
     handleErrorClient(res, 500, "Error al actualizar la clase.", error.message);
   }
 }
