@@ -43,7 +43,7 @@ export const DeleteElectivo = (fetchUsers) => {
         }
       }
     } catch (error) {
-      console.error("Error al eliminar usuario:", error);
+      console.error("Error al eliminar electivo:", error);
       confirmError();
     }
   };
