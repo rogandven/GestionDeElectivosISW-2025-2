@@ -9,7 +9,8 @@ export async function getElectivos() {
     return [];
   }
 }
-======= */
+*/
+
 import axios from '@services/root.service.js';
 
 export async function getElectivos() {
