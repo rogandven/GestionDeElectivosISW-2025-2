@@ -31,7 +31,7 @@ async function confirmError() {
   });
 }
 
-export const DeleteElectivo = (fetchUsers) => {
+export const DeleteElectivo = (fetchELectivo) => {
   const handleDeleteElectivo = async (electivoId) => {
     try {
       const isConfirmed = await confirmDeleteElectivo();
@@ -39,7 +39,7 @@ export const DeleteElectivo = (fetchUsers) => {
         const response = await deleteElectivo(electivoId);
         if (response) {
           confirmAlert();
-          await fetchUsers();
+          await fetchELectivo();
         }
       }
     } catch (error) {
