@@ -59,6 +59,25 @@ export async function createElectivo(req, res) {
     console.error("Error al crear electivo:", error);
     res.status(500).json({ message: "Error al crear electivo" });
   }
+};
+
+export async function getElectivoById(req, res) {
+  try {
+    // Obtener el repositorio de electivos y buscar un electivo por ID
+    const ElectivoEntityRepository = AppDataSource.getRepository(ElectivoEntity);
+    const { id } = req.params;
+    const electivos = await ElectivoEntityRepository.findOne({ where: { id } });
+
+    // Si no se encuentra el electivo, devolver un error 404
+    if (!electivos) {
+      return res.status(404).json({ message: "Electivo no encontrado." });
+    }
+
+    res.status(200).json({ message: "Electivo encontrado: ", data: electivos });
+  } catch (error) {
+    console.error("Error en electivo.controller.js -> getUserById(): ", error);
+    res.status(500).json({ message: "Error interno del servidor." });
+  }
 }
 
 export async function updateElectivo(req, res) {
