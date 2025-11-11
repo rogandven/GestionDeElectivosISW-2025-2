@@ -26,6 +26,8 @@ export const updateClass = async (classId, updatedData) => {
         const response = await axios.put(`/api/clases/${classId}`, updatedData);
         return response.data;
     } catch (error) {
+        console.log(JSON.stringify(error));
+        console.log(JSON.stringify(updatedData));
         console.error('Error al actualizar la clase:', error);
         throw error;
     }

@@ -33,7 +33,7 @@ export async function updateClaseById_Electivo(id_electivo, updateData) {
 
 
   Object.assign(clase, updateData);
-
+  
   return await claseRepository.save(clase);
 }
 
