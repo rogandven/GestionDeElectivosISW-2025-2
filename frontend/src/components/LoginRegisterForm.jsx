@@ -19,7 +19,6 @@ const LoginRegisterForm = ({ mode = "login", onSubmit, loginError}) => {
 
     } catch (error) {
       if (error.response) {
-        // Error from the backend
         console.error("Error del backend:", error.response.data);
       }
     }
@@ -85,10 +84,11 @@ const LoginRegisterForm = ({ mode = "login", onSubmit, loginError}) => {
                 message: "El correo debe tener como máximo 50 caracteres",
               },
               pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@gmail\.(com|cl)$/,
-                message:
-                  "El correo debe ser un correo de Gmail válido (@gmail.com o @gmail.cl)",
-              },
+              value: /^[a-zA-Z0-9._%+-]+@(ubiobio\.cl|alumnos\.ubiobio\.cl)$/,
+              message:
+                "El correo debe ser institucional de la UBB (@ubiobio.cl o @alumnos.ubiobio.cl)",
+            },
+
             })}
           />
           {errors.email && (

@@ -1,17 +1,26 @@
+
+
 "use strict";
 import "@styles/electivos.css";
 import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import { useGetElectivos } from "@hooks/electivos/useGetElectivos.jsx";
+import { FaClipboardList } from "react-icons/fa";
+import { useGetElectivos } from "@hooks/electivos/useGetElectivos";
+import { useCreateElectivo } from "@hooks/electivos/useCreateElectivo";
+import { useEditElectivo } from "@hooks/electivos/useEditElectivo";
+import { useDeleteElectivo } from "@hooks/electivos/useDeleteElectivo";
 
-const Electivos = () => {
+const ElectivosAdmin = () => {
   const { electivos, fetchElectivos } = useGetElectivos();
+  const { handleCreateElectivo } = useCreateElectivo(fetchElectivos);
+  const { handleEditElectivo } = useEditElectivo(fetchElectivos);
+  const { handleDeleteElectivo } = useDeleteElectivo(fetchElectivos);
   const [busqueda, setBusqueda] = useState("");
   const [filtroArea, setFiltroArea] = useState("");
 
-  useEffect(() => {
-    fetchElectivos();
-  }, [fetchElectivos]);
+useEffect(() => {
+  fetchElectivos();
+}, [fetchElectivos]);
+
 
   const limpiarFiltros = () => {
     setBusqueda("");
@@ -27,33 +36,9 @@ const Electivos = () => {
     return coincideTexto && coincideArea;
   });
 
-  const mostrarDescripcion = (nombre, descripcion) => {
-    Swal.fire({
-      title: `<h2 style="color:#2b2b2b;">${nombre}</h2>`,
-      html: `
-        <div style="
-          background:#f9f9f9;
-          border:1px solid #ccc;
-          border-radius:10px;
-          padding:15px;
-          text-align:left;
-          font-size:1rem;
-          color:#333;
-          max-height:300px;
-          overflow-y:auto;
-        ">
-          ${descripcion}
-        </div>
-      `,
-      confirmButtonText: "Cerrar",
-      confirmButtonColor: "#3085d6",
-      width: 600,
-    });
-  };
-
   return (
     <div className="users-page">
-      <h2>Electivos disponibles</h2>
+      <h2>Gestión de Electivos</h2>
       <div className="solicitud-filtros-container">
         <input
           className="solicitud-filtro-input"
@@ -78,35 +63,42 @@ const Electivos = () => {
           </button>
         )}
       </div>
+      <div className="solicitud-button-container">
+        <button className="solicitud-addbtn" onClick={handleCreateElectivo}>
+          <FaClipboardList style={{ marginRight: "8px" }} size={20} />
+          Registrar nuevo electivo
+        </button>
+      </div>
       <div className="solicitud-tabla-wrapper">
         <table className="solicitud-table">
           <thead>
             <tr>
               <th>Nombre</th>
               <th>Cupos</th>
-              <th>Inscritos</th>
-              <th>Área</th>
               <th>Apertura</th>
               <th>Cierre</th>
+              <th>Área</th>
               <th>Descripción</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(electivosFiltrados) && electivosFiltrados.length > 0 ? (
+            {Array.isArray(electivosFiltrados) &&
+            electivosFiltrados.length > 0 ? (
               electivosFiltrados.map((e) => (
                 <tr key={e.id}>
                   <td>{e.nombre}</td>
                   <td>{e.cupos}</td>
-                  <td>{e.inscritos}</td>
-                  <td>{e.area}</td>
                   <td>{e.apertura}</td>
                   <td>{e.cierre}</td>
-                  <td style={{ textAlign: "center" }}>
-                    <button
-                      className="edit"
-                      onClick={() => mostrarDescripcion(e.nombre, e.descripcion)}
-                    >
-                      Información
+                  <td>{e.area}</td>
+                  <td style={{ maxWidth: "260px" }}>{e.descripcion}</td>
+                  <td>
+                    <button className="edit" onClick={() => handleEditElectivo(e)}>
+                      Editar
+                    </button>
+                    <button className="delete" onClick={() => handleDeleteElectivo(e.id)}>
+                      Eliminar
                     </button>
                   </td>
                 </tr>
@@ -114,7 +106,7 @@ const Electivos = () => {
             ) : (
               <tr>
                 <td colSpan="7" style={{ textAlign: "center" }}>
-                  No hay electivos disponibles
+                  No hay electivos registrados
                 </td>
               </tr>
             )}
@@ -125,4 +117,4 @@ const Electivos = () => {
   );
 };
 
-export default Electivos;
+export default ElectivosAdmin;

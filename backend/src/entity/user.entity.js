@@ -3,7 +3,7 @@
 import { EntitySchema } from "typeorm";
 
 export const UserEntity = new EntitySchema({
-    name: "UserEntity",
+    name: "User",
     tableName: "users",
     columns: {
         id: {
