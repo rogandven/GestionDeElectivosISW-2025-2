@@ -96,7 +96,7 @@ export async function updatePreinscription(req, res) {
         }
 
         const existingPreinscription = await preinscriptionRepository.findOneBy({ id: originalId });
-        console.log(existingPreinscription);
+        // console.log(existingPreinscription);
         if (!existingPreinscription) {
             return res.status(400).json({ message: "Preinscripcion no existe" });
         }
@@ -130,7 +130,7 @@ export async function deletePreinscription(req, res) {
             return res.status(404).json({ message: result.error.message });
         }
         const existingPreinscription = await preinscriptionRepository.findOneBy(idObject);
-        console.log(existingPreinscription);
+        // console.log(existingPreinscription);
         if (!existingPreinscription) {
             return res.status(400).json({ message: "Preinscripcion no existe" });
         }

@@ -51,12 +51,12 @@ export async function updateElectivo(req, res) {
     // Obtener el repositorio de electivos y buscar un electivo por ID
     const ElectivoEntityRepository = AppDataSource.getRepository(ElectivoEntity);
     const { id } = req.params;
-    console.log(id);
+    // console.log(id);
     const { nombre, cupos, inscritos, apertura, cierre, area, descripcion } = req.body;
     // const { error } = updateValidation.validate(req.body);
     // if (error) return res.status(400).json({ message: error.message });
     const electivos = await ElectivoEntityRepository.findOne({ where: { id } });
-    console.log(JSON.stringify(electivos));
+    // console.log(JSON.stringify(electivos));
     // Si no se encuentra el electivo, devolver un error 404
     if (!electivos) {
       return res.status(404).json({ message: "Electivo no encontrado." });
@@ -113,7 +113,7 @@ export async function updateElectivo(req, res) {
 
     // Guardar los cambios en la base de datos
     const result = await ElectivoEntityRepository.update({ id }, electivos);
-    console.log(result);
+    // console.log(result);
     if (result.affected <= 0) {
       return res.status(400).json({message: "No se cambió ningún electivo"});
     }

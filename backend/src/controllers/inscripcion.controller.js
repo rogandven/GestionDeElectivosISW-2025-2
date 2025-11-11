@@ -27,7 +27,7 @@ export async function CreateInscripciones(req, res) {
         electivoId: electivoId
       }
     });
-    console.log(inscripcionExistente);
+    // console.log(inscripcionExistente);
 
     if (inscripcionExistente) {
       if (inscripcionExistente.estado === "rechazada" || inscripcionExistente.estado === "retirada") {
@@ -121,20 +121,20 @@ export async function DeleteInscripciones(req, res) {
       return res.status(400).json({ message: "El ID de la inscripción es obligatorio" });
     }
 
-    console.log(inscripcionId);
-    console.log(userId);
+    // console.log(inscripcionId);
+    // console.log(userId);
     const inscripcion = await inscripcionRepository.findOne({
       where: { 
         id: inscripcionId,
         userId: userId 
       }
     });
-    console.log(inscripcion);
+    // console.log(inscripcion);
 
     if (!inscripcion) {
       return res.status(404).json({ message: "Inscripción no encontrada" });
     }
-    console.log(inscripcion.estado);
+    // console.log(inscripcion.estado);
 
     if (inscripcion.estado === "retirada" || inscripcion.estado === "rechazada") {
       return res.status(400).json({ message: "Esta inscripción ya fue cancelada" });
@@ -201,8 +201,8 @@ export async function gestionarInscripcion(req, res) {
     const claseRepository = AppDataSource.getRepository(ClaseEntity);
     const { inscripcionId } = req.params;
     const { accion, motivo } = req.body;
-    console.log(accion);
-    console.log(motivo);
+    // console.log(accion);
+    // console.log(motivo);
 
     if (!accion || !["aprobar", "rechazar"].includes(accion)) {
       return res.status(400).json({ 

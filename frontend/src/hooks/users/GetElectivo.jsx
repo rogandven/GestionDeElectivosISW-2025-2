@@ -18,15 +18,15 @@ export const GetElectivo = () => {
             const item = sessionStorage.getItem("electivo");
             const { nombre } = JSON.parse(item ? item : "{}") || "";
             for (let i = 0; i < data.length; i++) {
-                console.log("DATA SUB " + String(i) + ": ");
-                console.log(data[i]);
+                // console.log("DATA SUB " + String(i) + ": ");
+                // console.log(data[i]);
                 try {
                     if(data[i].nombre === nombre) {
                         data.splice(i, 1);
                         break;
                     }
                 } catch (error) {
-                    console.log(error);
+                    // console.log(error);
                 }
             }
         } catch (error) {

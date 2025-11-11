@@ -57,8 +57,8 @@ export function getPublicClass(req, res) {
 
 export async function getClases(req, res) {
   // const clase = req.clase;
-  // console.log(user);
-  // console.log(JSON.stringify(user));
+  // // console.log(user);
+  // // console.log(JSON.stringify(user));
   const claseData = await findAllClases();
   if (!claseData) {
     return handleErrorClient(res, 400, "Clases no encontradas");
@@ -92,14 +92,14 @@ export async function patchClase(req, res) {
   const existingHorarioSala = await claseRepository.findOne({
       where: { horario, sala },
     });
-    console.log(existingHorarioSala);
+    // console.log(existingHorarioSala);
     if (existingHorarioSala && existingHorarioSala.id_electivo != id)
       return res.status(409).json({ message: "Horario y sala ya registrado." });
 
   try {
     const updatedClase = await updateClaseById_Electivo(id, { nombreEl, profesor, sala, horario, cupos });
     handleSuccess(res, 200, "Clase actualizada exitosamente", updatedClase)
-    console.log(profesor);
+    // console.log(profesor);
   } catch (error) {
     handleErrorClient(res, 500, "Error al actualizar la clase.", error.message);
   }
@@ -112,7 +112,7 @@ export async function deleteClase(req, res) {
   if (!id) {
     return res.status(400).json({ message: "El ID de la clase es obligatorio" });
   }
-  console.log(id);
+  // console.log(id);
   try {
     await deleteClaseById_Electivo(id);
     handleSuccess(res, 200, "Clase eliminada exitosamente");
