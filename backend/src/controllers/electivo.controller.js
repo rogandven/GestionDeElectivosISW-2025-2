@@ -1,29 +1,63 @@
+
+"use strict";
+
 import { AppDataSource } from "../config/configDb.js";
-import { ElectivoEntity } from "../entity/electivo.entity.js";
+import ElectivoEntity from "../entity/electivo.entity.js";
+import {
+  createValidation,
+  updateValidation,
+} from "../validations/electivo.validation.js";
 
-// Repositorio TypeORM
-const electivoRepository = AppDataSource.getRepository("Electivo");
+const electivoRepo = AppDataSource.getRepository(ElectivoEntity);
 
-// Obtener todos los electivos
-export const getElectivos = async (req, res) => {
+export async function getElectivos(req, res) {
   try {
-    const electivos = await electivoRepository.find();
-    res.json({ ok: true, data: electivos });
+    const { filtro, area, apertura, cierre } = req.query;
+
+    let query = electivoRepo.createQueryBuilder("electivo");
+
+    if (filtro) {
+      query = query.andWhere(
+        "(electivo.nombre ILIKE :filtro OR electivo.descripcion ILIKE :filtro)",
+        { filtro: `%${filtro}%` }
+      );
+    }
+
+    if (area) query = query.andWhere("electivo.area ILIKE :area", { area });
+    if (apertura)
+      query = query.andWhere("DATE(electivo.apertura) = :apertura", {
+        apertura,
+      });
+    if (cierre)
+      query = query.andWhere("DATE(electivo.cierre) = :cierre", { cierre });
+
+    const resultados = await query.getMany();
+
+    res.status(200).json({
+      message: "Electivos obtenidos correctamente",
+      data: resultados,
+    });
   } catch (error) {
-    console.error("Error al obtener electivos:", error);
-    res.status(500).json({ ok: false, message: "Error interno del servidor" });
+    console.error("Error al listar electivos:", error);
+    res.status(500).json({ message: "Error al listar electivos" });
   }
-};
+}
 
-// Crear un nuevo electivo (solo admin)
-export const createElectivo = async (req, res) => {
+export async function createElectivo(req, res) {
   try {
-    const nuevo = electivoRepository.create(req.body);
-    const result = await electivoRepository.save(nuevo);
-    res.status(201).json({ ok: true, data: result });
+    const { error } = createValidation.validate(req.body);
+    if (error) return res.status(400).json({ message: error.message });
+
+    const nuevoElectivo = electivoRepo.create(req.body);
+    await electivoRepo.save(nuevoElectivo);
+
+    res.status(201).json({
+      message: "Electivo creado correctamente",
+      data: nuevoElectivo,
+    });
   } catch (error) {
     console.error("Error al crear electivo:", error);
-    res.status(500).json({ ok: false, message: "Error interno" });
+    res.status(500).json({ message: "Error al crear electivo" });
   }
 };
 
@@ -34,6 +68,7 @@ export async function getElectivoById(req, res) {
     const { id } = req.params;
     const electivos = await ElectivoEntityRepository.findOne({ where: { id } });
 
+    
     // Si no se encuentra el electivo, devolver un error 404
     if (!electivos) {
       return res.status(404).json({ message: "Electivo no encontrado." });
@@ -48,104 +83,42 @@ export async function getElectivoById(req, res) {
 
 export async function updateElectivo(req, res) {
   try {
-    // Obtener el repositorio de electivos y buscar un electivo por ID
-    const ElectivoEntityRepository = AppDataSource.getRepository(ElectivoEntity);
     const { id } = req.params;
-    // console.log(id);
-    const { nombre, cupos, inscritos, apertura, cierre, area, descripcion } = req.body;
-    // const { error } = updateValidation.validate(req.body);
-    // if (error) return res.status(400).json({ message: error.message });
-    const electivos = await ElectivoEntityRepository.findOne({ where: { id } });
-    // console.log(JSON.stringify(electivos));
-    // Si no se encuentra el electivo, devolver un error 404
-    if (!electivos) {
-      return res.status(404).json({ message: "Electivo no encontrado." });
-    }
+    const electivo = await electivoRepo.findOneBy({ id });
 
-    /*
-      id: {
-      primary: true,
-      type: "int",
-      generated: true,
-    },
-    nombre: {
-      type: "varchar",
-      length: 255,
-    },
-    cupos: {
-      type: "int",
-    },
-    inscritos: {
-      type: "int",
-      default: 0,
-    },
-    apertura: {
-      type: "date",
-    },
-    cierre: {
-      type: "date",
-    },
-    area: {
-      type: "varchar",
-      length: 100,
-    },
-    descripcion: {
-      type: "text",
-    },  
-    */
+    if (!electivo)
+      return res.status(404).json({ message: "Electivo no encontrado" });
 
-    // Validar que al menos uno de los campos a actualizar esté presente
-    electivos.id = id;
-    electivos.nombre = nombre || electivos.nombre;
-    electivos.cupos = cupos || electivos.cupos;
-    electivos.inscritos = inscritos || electivos.inscritos;
-    electivos.apertura = apertura || electivos.apertura;
-    electivos.cierre = cierre || electivos.cierre;
-    electivos.area = area || electivos.area;
-    electivos.descripcion = descripcion || electivos.descripcion;
+    const { error } = updateValidation.validate(req.body);
+    if (error) return res.status(400).json({ message: error.message });
 
+    Object.assign(electivo, req.body);
+    await electivoRepo.save(electivo);
 
-
-    // electivos.profesor = profesor || electivos.profesor;
-    // electivos.cupos = cupos || electivos.cupos;
-    // electivos.creditos = creditos || electivos.creditos;
-    // electivos.descripcion = descripcion || electivos.descripcion;
-
-    // Guardar los cambios en la base de datos
-    const result = await ElectivoEntityRepository.update({ id }, electivos);
-    // console.log(result);
-    if (result.affected <= 0) {
-      return res.status(400).json({message: "No se cambió ningún electivo"});
-    }
-
-    res
-      .status(200)
-      .json({ message: "Electivo actualizado exitosamente.", data: electivos });
+    res.status(200).json({
+      message: "Electivo actualizado correctamente",
+      data: electivo,
+    });
   } catch (error) {
-    console.error("Error en electivo.controller.js -> updateElectivoById(): ", error);
-    res.status(500).json({ message: "Error interno del servidor." });
+    console.error("Error al actualizar electivo:", error);
+    res.status(500).json({ message: "Error al actualizar electivo" });
   }
 }
 
 export async function deleteElectivo(req, res) {
   try {
-    // Obtener el repositorio de electivos y buscar el electivo por ID
-    const ElectivoEntityRepository = AppDataSource.getRepository(ElectivoEntity);
     const { id } = req.params;
+    const electivo = await electivoRepo.findOneBy({ id });
 
-    const electivos = await ElectivoEntityRepository.findOne({ where: { id } });
+    if (!electivo)
+      return res.status(404).json({ message: "Electivo no encontrado" });
 
-    // Si no se encuentra el electivo, devolver un error 404
-    if (!electivos) {
-      return res.status(404).json({ message: "Electivo no encontrado." });
-    }
+    await electivoRepo.remove(electivo);
 
-    // Eliminar el electivo de la base de datos
-    await ElectivoEntityRepository.remove(electivos);
-
-    res.status(200).json({ message: "Electivo eliminado exitosamente." });
+    res.status(200).json({ message: "Electivo eliminado correctamente" });
   } catch (error) {
-    console.error("Error en electivo.controller.js -> deleteElectivoById(): ", error);
-    res.status(500).json({ message: "Error interno del servidor." });
+    console.error("Error al eliminar electivo:", error);
+    res.status(500).json({ message: "Error al eliminar electivo" });
   }
 }
+

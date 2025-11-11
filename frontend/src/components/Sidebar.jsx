@@ -1,7 +1,6 @@
-/* <<<<<<< seba-avance
-import { NavLink, useNavigate } from "react-router-dom";
+/* import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "@services/auth.service.js";
-import { FaHome, FaUsers, FaSignOutAlt, FaBookOpen } from "react-icons/fa";
+import { FaHome, FaUsers, FaSignOutAlt, FaBookOpen, FaTasks } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import "@styles/Sidebar.css";
 
@@ -9,7 +8,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   const user = JSON.parse(sessionStorage.getItem("usuario")) || "";
-  const userRole = user?.rol;
+  const userRole = user?.rol?.toUpperCase();
 
   const logoutSubmit = () => {
     try {
@@ -22,12 +21,12 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <h2>Metodología de Desarrollo</h2>
+      <h2>Preinscripción Electivos</h2>
       <nav>
         <ul>
           <li>
             <NavLink to="/home">
-              <FaHome className="icon"/> Inicio
+              <FaHome className="icon" /> Inicio
             </NavLink>
           </li>
 
@@ -37,22 +36,32 @@ const Sidebar = () => {
             </NavLink>
           </li>
 
-          {userRole === "administrador" && (
-            <li>
-              <NavLink to="/users">
-                <FaUsers className="icon"/> Usuarios
-              </NavLink>
-            </li>
+          {(userRole === "ADMINISTRADOR" || userRole === "PROFESOR") && (
+            <>
+              <li>
+                <NavLink to="/admin/electivos">
+                  <FaTasks className="icon" /> Gestión de electivos
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/users">
+                  <FaUsers className="icon" /> Usuarios
+                </NavLink>
+              </li>
+            </>
           )}
+
           <li>
             <NavLink to="/profile">
-              <CgProfile className="icon"/> Perfil
+              <CgProfile className="icon" /> Perfil
             </NavLink>
           </li>
-          <li style={{ height: "70%" }}/>
+
+          <li style={{ height: "70%" }} />
+
           <li className="logout">
             <NavLink to="/login" onClick={logoutSubmit}>
-              <FaSignOutAlt className="icon"/> Cerrar Sesión
+              <FaSignOutAlt className="icon" /> Cerrar sesión
             </NavLink>
           </li>
         </ul>
@@ -62,8 +71,8 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-=======
 */
+
 import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "@services/auth.service.js";
 import { FaHome, FaUsers, FaSignOutAlt } from "react-icons/fa";
@@ -131,4 +140,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-// >>>>>>> merge-test

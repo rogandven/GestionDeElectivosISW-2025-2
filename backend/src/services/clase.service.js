@@ -28,7 +28,7 @@ export async function updateClaseById_Electivo(id_electivo, updateData) {
   // console.log(clase);
 
   if (!clase) {
-    throw new Error("Usuario no encontrado");
+    throw new Error("Clase no encontrada");
   }
 
 

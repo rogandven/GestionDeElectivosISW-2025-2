@@ -17,9 +17,11 @@ export async function CreateInscripciones(req, res) {
     }
 
     const electivo = await claseRepository.findOne({ where: { id_electivo: electivoId } });
+    console.log(electivo);
     if (!electivo) {
       return res.status(404).json({ message: "Electivo no encontrado" });
     }
+    
 
     const inscripcionExistente = await inscripcionRepository.findOne({
       where: { 
@@ -114,6 +116,10 @@ export async function DeleteInscripciones(req, res) {
     const inscripcionRepository = AppDataSource.getRepository(InscripcionEntity);
     const electivoRepository = AppDataSource.getRepository(ClaseEntity);
     const { inscripcionId } = req.params;
+    if (!req.body) {
+      return res.status(400).json({ message: "Pedido vacío" });
+    }
+
     const { motivo } = req.body;
     const userId = req.user.id; 
 
