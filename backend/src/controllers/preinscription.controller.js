@@ -82,8 +82,11 @@ export async function updatePreinscription(req, res) {
         const data = req.body;
         const preinscriptionRepository = AppDataSource.getRepository(Preinscription);
         let originalId = req.params.id;
-
-        let result = preinscriptionIntegrityValidation.validate(data);
+        let result = preinscriptionFindingValidation.validate({id: originalId});
+        if (result.error) {
+            return res.status(404).json({ message: result.error.message });
+        }
+        result = preinscriptionIntegrityValidation.validate(data);
         if (result.error) {
             return res.status(400).json({ message: result.error.message });
         }        
@@ -92,7 +95,9 @@ export async function updatePreinscription(req, res) {
             return res.status(400).json({ message: result.error.message });
         }
 
-        if (!preinscriptionRepository.findOneBy({ id: originalId })) {
+        const existingPreinscription = await preinscriptionRepository.findOneBy({ id: originalId });
+        // console.log(existingPreinscription);
+        if (!existingPreinscription) {
             return res.status(400).json({ message: "Preinscripcion no existe" });
         }
 
@@ -120,6 +125,15 @@ export async function deletePreinscription(req, res) {
     try {
         const preinscriptionRepository = AppDataSource.getRepository(Preinscription);
         const idObject = {id: req.params.id};
+        let result = preinscriptionFindingValidation.validate(idObject);
+        if (result.error) {
+            return res.status(404).json({ message: result.error.message });
+        }
+        const existingPreinscription = await preinscriptionRepository.findOneBy(idObject);
+        // console.log(existingPreinscription);
+        if (!existingPreinscription) {
+            return res.status(400).json({ message: "Preinscripcion no existe" });
+        }
 
         const queryRunner = AppDataSource.createQueryRunner();
         await queryRunner.startTransaction();

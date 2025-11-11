@@ -2,12 +2,12 @@
 
 import { AppDataSource } from "../config/configDb.js";
 import InscripcionEntity from "../entity/inscripcion.entity.js";
-import ElectivoEntity from "../entity/electivo.entity.js";
+import ClaseEntity from "../entity/clase.entity.js";
 
 export async function CreateInscripciones(req, res) {
   try {
     const inscripcionRepository = AppDataSource.getRepository(InscripcionEntity);
-    const electivoRepository = AppDataSource.getRepository(ElectivoEntity);
+    const claseRepository = AppDataSource.getRepository(ClaseEntity);
     
     const { electivoId } = req.body;
     const userId = req.user.id;
@@ -16,8 +16,7 @@ export async function CreateInscripciones(req, res) {
       return res.status(400).json({ message: "El ID del electivo es obligatorio" });
     }
 
-  
-    const electivo = await electivoRepository.findOne({ where: { id: electivoId } });
+    const electivo = await claseRepository.findOne({ where: { id_electivo: electivoId } });
     if (!electivo) {
       return res.status(404).json({ message: "Electivo no encontrado" });
     }
@@ -28,7 +27,7 @@ export async function CreateInscripciones(req, res) {
         electivoId: electivoId
       }
     });
-    console.log(inscripcionExistente);
+    // console.log(inscripcionExistente);
 
     if (inscripcionExistente) {
       if (inscripcionExistente.estado === "rechazada" || inscripcionExistente.estado === "retirada") {
@@ -50,7 +49,7 @@ export async function CreateInscripciones(req, res) {
     let estadoDetalle = "";
     let enListaEspera = false;
 
-    if (inscripcionesActivas >= electivo.cupoMaximo) {
+    if (inscripcionesActivas >= electivo.cupos) {
       estadoDetalle = "En lista de espera: No hay cupos disponibles. Pendiente de revisión";
       enListaEspera = true;
     } else {
@@ -59,7 +58,7 @@ export async function CreateInscripciones(req, res) {
 
    
     const nuevaInscripcion = inscripcionRepository.create({
-      electivoNombre: electivo.nombre,
+      electivoNombre: electivo.nombreEl,
       userId: userId,
       electivoId: electivoId,
       estado: "en_espera",
@@ -74,7 +73,7 @@ export async function CreateInscripciones(req, res) {
       data: {
         inscripcion: nuevaInscripcion,
         enListaEspera: enListaEspera,
-        cuposDisponibles: electivo.cupoMaximo - inscripcionesActivas
+        cuposDisponibles: electivo.cupos - inscripcionesActivas
       }
     });
   } catch (error) {
@@ -113,28 +112,36 @@ export async function getInscripciones(req, res) {
 export async function DeleteInscripciones(req, res) {
   try {
     const inscripcionRepository = AppDataSource.getRepository(InscripcionEntity);
-    const electivoRepository = AppDataSource.getRepository(ElectivoEntity);
+    const electivoRepository = AppDataSource.getRepository(ClaseEntity);
     const { inscripcionId } = req.params;
     const { motivo } = req.body;
     const userId = req.user.id; 
 
+    if (!inscripcionId) {
+      return res.status(400).json({ message: "El ID de la inscripción es obligatorio" });
+    }
+
+    // console.log(inscripcionId);
+    // console.log(userId);
     const inscripcion = await inscripcionRepository.findOne({
       where: { 
         id: inscripcionId,
         userId: userId 
       }
     });
+    // console.log(inscripcion);
 
     if (!inscripcion) {
       return res.status(404).json({ message: "Inscripción no encontrada" });
     }
+    // console.log(inscripcion.estado);
 
     if (inscripcion.estado === "retirada" || inscripcion.estado === "rechazada") {
       return res.status(400).json({ message: "Esta inscripción ya fue cancelada" });
     }
 
   
-    const electivo = await electivoRepository.findOne({ where: { id: inscripcion.electivoId } });
+    const electivo = await electivoRepository.findOne({ where: { id_electivo: inscripcion.electivoId } });
     
     if (electivo && electivo.fechaFinRetiro && inscripcion.estado === "activa") {
       const ahora = new Date();
@@ -165,6 +172,10 @@ export async function getInscripcion(req, res) {
     const inscripcionRepository = AppDataSource.getRepository(InscripcionEntity);
     const { inscripcionId } = req.params;
     const userId = req.user.id;
+    if (!inscripcionId) {
+      return res.status(400).json({ message: "El ID de la inscripción es obligatorio" });
+    }
+
 
     const inscripcion = await inscripcionRepository.findOne({
       where: { 
@@ -187,11 +198,11 @@ export async function getInscripcion(req, res) {
 export async function gestionarInscripcion(req, res) {
   try {
     const inscripcionRepository = AppDataSource.getRepository(InscripcionEntity);
-    const electivoRepository = AppDataSource.getRepository(ElectivoEntity);
+    const claseRepository = AppDataSource.getRepository(ClaseEntity);
     const { inscripcionId } = req.params;
     const { accion, motivo } = req.body;
-    console.log(accion);
-    console.log(motivo);
+    // console.log(accion);
+    // console.log(motivo);
 
     if (!accion || !["aprobar", "rechazar"].includes(accion)) {
       return res.status(400).json({ 
@@ -224,13 +235,13 @@ export async function gestionarInscripcion(req, res) {
         where: { electivoId: inscripcion.electivoId, estado: "activa" }
       });
 
-      const electivo = await electivoRepository.findOne({ where: { id: inscripcion.electivoId } });
+      const electivo = await claseRepository.findOne({ where: { id_electivo: inscripcion.electivoId } });
       
       if (!electivo) {
         return res.status(404).json({ message: "Electivo no encontrado" });
       }
 
-      if (inscripcionesActivas >= electivo.cupoMaximo) {
+      if (inscripcionesActivas >= electivo.cupos) {
         return res.status(400).json({ 
           message: "No hay cupos disponibles para aprobar esta inscripción" 
         });
@@ -240,8 +251,8 @@ export async function gestionarInscripcion(req, res) {
       inscripcion.estadoDetalle = "Inscripción aprobada";
       await inscripcionRepository.save(inscripcion);
 
-      await electivoRepository.update(
-        { id: electivo.id }, 
+      await claseRepository.update(
+        { id_electivo: electivo.id_electivo }, 
         { inscritosActuales: inscripcionesActivas + 1 }
       );
 
@@ -268,11 +279,11 @@ export async function gestionarInscripcion(req, res) {
 export async function getInscripcionesEnEspera(req, res) {
   try {
     const inscripcionRepository = AppDataSource.getRepository(InscripcionEntity);
-    const { electivoId, periodo } = req.query;
+    const { id_electivo, periodo } = req.query;
 
     const where = { estado: "en_espera" };
-    if (electivoId) {
-      where.electivoId = parseInt(electivoId);
+    if (id_electivo) {
+      where.electivoId = parseInt(id_electivo);
     }
     if (periodo) {
       where.periodo = periodo;

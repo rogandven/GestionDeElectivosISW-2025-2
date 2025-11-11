@@ -85,7 +85,7 @@ export async function createElectivos() {
             },
         ];
         for (const electivo of electivosIniciales) {
-            console.log(JSON.stringify(electivo));
+            // console.log(JSON.stringify(electivo));
             /* await electivoRepo.save((
                 electivoRepo.create(electivo)
             ));

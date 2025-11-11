@@ -8,7 +8,7 @@ const router = Router();
 
 router.post("/Crear",authenticateJwt,createElectivo);
 router.get("/Obtener",authenticateJwt,getElectivos);
-router.delete("/Eliminar",authenticateJwt,deleteElectivo);
+router.delete("/Eliminar/:id",authenticateJwt,deleteElectivo);
 router.put("/Actualizar/:id",authenticateJwt,updateElectivo);
 
 export default router;

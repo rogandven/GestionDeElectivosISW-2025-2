@@ -38,11 +38,11 @@ async function editElectivoInfo(electivos) {
       const cupos = document.getElementById("swal2-input3").value;
       const creditos = document.getElementById("swal2-input4").value;
 
-      console.log("NOMBRE: " + String(nombre));
-      console.log("DESCRIPCION: " + String(descripcion));
-      console.log("PROFESOR: " + String(profesor));
-      console.log("CUPOS: " + String(cupos));
-      console.log("CREDITOS: " + String(creditos));
+      // console.log("NOMBRE: " + String(nombre));
+      // console.log("DESCRIPCION: " + String(descripcion));
+      // console.log("PROFESOR: " + String(profesor));
+      // console.log("CUPOS: " + String(cupos));
+      // console.log("CREDITOS: " + String(creditos));
 
       if (!nombre || !profesor) {
         Swal.showValidationMessage("Por favor, completa todos los campos");

@@ -25,7 +25,7 @@ export async function findClaseById_electivo(id_electivo) {
 
 export async function updateClaseById_Electivo(id_electivo, updateData) {
   const clase = await claseRepository.findOneBy({ id_electivo } );
-  console.log(clase);
+  // console.log(clase);
 
   if (!clase) {
     throw new Error("Usuario no encontrado");
@@ -38,13 +38,13 @@ export async function updateClaseById_Electivo(id_electivo, updateData) {
 }
 
 export async function deleteClaseById_Electivo(id_electivo) {
-  console.log(id_electivo);
+  // console.log(id_electivo);
   const clase = await claseRepository.findOneBy({  id_electivo });
 
   if (!clase) {
     throw new Error("Clase no encontrada");
   }
-  // console.log(user);
+  // // console.log(user);
   // await userRepository.delete(user);
   await claseRepository.delete({id_electivo: clase.id_electivo});
 }
