@@ -2,9 +2,9 @@
 
 import { EntitySchema } from "typeorm";
 
-export const ClaseEntity = new EntitySchema({
-    name: "ClaseEntity",
-    tableName: "clases",
+export const HorarioEntity = new EntitySchema({
+    name: "HorarioEntity",
+    tableName: "horarios",
     columns: {
         id_electivo: {
             type: Number,
@@ -20,18 +20,23 @@ export const ClaseEntity = new EntitySchema({
             type: String,
             nullable: false,
         },
-        sala: {
+        hora_inicio: {
             type: String,
             nullable: false,
         },
-        horario: {
-            type: "varchar",
+        hora_termino: {
+            type: String,
             nullable: false,
         },
-        cupos: {
+        sala: {
             type: Number,
             nullable:false
         },
+        dia: {
+            type: String,
+            nullable:false
+        },
+
         status: {
             type: "varchar",
             default: "scheduled",
@@ -49,4 +54,4 @@ export const ClaseEntity = new EntitySchema({
     },
 });
 
-export default ClaseEntity;
+export default HorarioEntity;

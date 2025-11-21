@@ -52,7 +52,7 @@ export async function updateElectivo(req, res) {
     const ElectivoEntityRepository = AppDataSource.getRepository(ElectivoEntity);
     const { id } = req.params;
     // console.log(id);
-    const { nombre, cupos, inscritos, apertura, cierre, area, descripcion } = req.body;
+    const { nombre, descripcion, cupos, inscritos, semestre_minimo,apertura, cierre, area } = req.body;
     // const { error } = updateValidation.validate(req.body);
     // if (error) return res.status(400).json({ message: error.message });
     const electivos = await ElectivoEntityRepository.findOne({ where: { id } });
@@ -97,12 +97,14 @@ export async function updateElectivo(req, res) {
     // Validar que al menos uno de los campos a actualizar esté presente
     electivos.id = id;
     electivos.nombre = nombre || electivos.nombre;
+    electivos.descripcion = descripcion || electivos.descripcion;
     electivos.cupos = cupos || electivos.cupos;
     electivos.inscritos = inscritos || electivos.inscritos;
+    electivos.semestre_minimo = semestre_minimo || electivos.semestre_minimo;
     electivos.apertura = apertura || electivos.apertura;
     electivos.cierre = cierre || electivos.cierre;
     electivos.area = area || electivos.area;
-    electivos.descripcion = descripcion || electivos.descripcion;
+    
 
 
 

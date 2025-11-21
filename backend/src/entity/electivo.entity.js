@@ -12,6 +12,9 @@ export const ElectivoEntity = new EntitySchema({
     nombre: {
       type: "varchar",
       length: 255,
+    }, 
+    descripcion: {
+      type: "text",
     },
     cupos: {
       type: "int",
@@ -19,6 +22,18 @@ export const ElectivoEntity = new EntitySchema({
     inscritos: {
       type: "int",
       default: 0,
+    }, 
+    creditos_requeridos:{
+      type: "int",
+      default: 0,
+    },
+    semestre_minimo:{
+      type: "string",
+      length: 10,
+    },
+    estado:{
+      type: "boolean",
+      default: true,
     },
     apertura: {
       type: "date",
@@ -29,9 +44,6 @@ export const ElectivoEntity = new EntitySchema({
     area: {
       type: "varchar",
       length: 100,
-    },
-    descripcion: {
-      type: "text",
     },
   },
 });
