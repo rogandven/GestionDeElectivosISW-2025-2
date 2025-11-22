@@ -23,12 +23,12 @@ export async function findClaseById_electivo(id_electivo) {
   return await horarioRepository.findOneBy({ id_electivo });
 }
 
-export async function updateClaseById_Electivo(id_electivo, updateData) {
+export async function updateHorarioById_Electivo(id_electivo, updateData) {
   const horario = await horarioRepository.findOneBy({ id_electivo } );
   // console.log(clase);
 
   if (!horario) {
-    throw new Error("Usuario no encontrado");
+    throw new Error("Horario no encontrado");
   }
 
 
@@ -37,12 +37,12 @@ export async function updateClaseById_Electivo(id_electivo, updateData) {
   return await horarioRepository.save(horario);
 }
 
-export async function deleteClaseById_Electivo(id_electivo) {
+export async function deleteHorarioById_Electivo(id_electivo) {
   // console.log(id_electivo);
   const horario = await horarioRepository.findOneBy({  id_electivo });
 
   if (!horario) {
-    throw new Error("Clase no encontrada");
+    throw new Error("Horario no encontrado");
   }
   // // console.log(user);
   // await userRepository.delete(user);
