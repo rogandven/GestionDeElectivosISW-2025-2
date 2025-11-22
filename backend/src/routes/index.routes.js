@@ -19,7 +19,7 @@ import { Router } from "express";
 import authRoutes from "./auth.routes.js"
 import userRoutes from "./user.routes.js";
 import electivoRoutes from "./electivo.routes.js"
-import claseRoutes from "./clase.routes.js";
+import horarioRoutes from "./horario.routes.js";
 import preinscriptionRoutes from "./preinscription.routes.js";
 
 import nowRoutes from "./now.routes.js";
@@ -29,7 +29,7 @@ const router = new Router();
 router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/electivos", electivoRoutes);
-router.use("/clases", claseRoutes);
+router.use("/horarios", horarioRoutes);
 router.use("/electivos3", nowRoutes);
 router.use("/Inscripciones",inscripcionRoutes);
 router.use("/preinscriptions", preinscriptionRoutes);
